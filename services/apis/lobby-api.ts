@@ -1,4 +1,4 @@
-import { LobbyCreateData, LobbyJoinData } from "@/types/Lobby";
+import { LobbyCreateData, LobbyJoinData, LobbyLeaveData } from "@/types/Lobby";
 import axios from "axios";
 
 class LobbyApi {
@@ -25,6 +25,18 @@ class LobbyApi {
   async getLobby(roomCode: string) {
     return axios
       .get(`${this.apiUrl}`, { params: { room_code: roomCode } })
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
+
+  async leaveLobby(data: LobbyLeaveData) {
+    return axios({
+      method: "DELETE",
+      url: `${this.apiUrl}/leave`,
+      data,
+    })
       .then((res) => res.data)
       .catch((err) => {
         throw err.response.data;

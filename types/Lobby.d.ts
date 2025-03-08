@@ -7,6 +7,11 @@ export type LobbyJoinData = {
   room_code: string;
 };
 
+export type LobbyLeaveData = {
+  player_id: string;
+  room_code: string;
+}
+
 export type LobbyResponseData = {
   id: string;
   created_at: string;

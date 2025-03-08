@@ -1,14 +1,31 @@
 "use client";
 
 import Button from "@/components/button";
-import Card from "@/components/card";
 import Typography from "@/components/typography";
-import Link from "next/link";
 import React from "react";
-import { useLobby } from "./_components/Lobby.hook";
+import { useLobbyAction, useLobbyData } from "./_components/Lobby.hook";
+import PlayerCard from "./_components/PlayerCard";
+import { PlayerResponseData } from "@/types/Lobby";
 
 export default function Lobby() {
-  const { isLoading, lobbyRoom, playerList, playerData } = useLobby();
+  const { isLoading, lobbyRoom, playerList, currentPlayer } = useLobbyData();
+  const { onLeave } = useLobbyAction();
+
+  if (!currentPlayer) {
+    return null;
+  }
+
+  const isMaster = (item: PlayerResponseData) => {
+    return item.id === currentPlayer?.id && item.room_role === "MASTER";
+  };
+
+  const isSelf = (item: PlayerResponseData) => {
+    return item.id === currentPlayer?.id;
+  };
+
+  const isHost = (item: PlayerResponseData) => {
+    return item.room_role === "MASTER";
+  };
 
   return (
     <>
@@ -19,33 +36,35 @@ export default function Lobby() {
         Waiting for players to join...
       </Typography.Paragraph>
       <div className="flex flex-col gap-2">
-        {[...Array(5)].map((_, i) => (
-          <Card key={i} className="h-20">
-            {!isLoading && playerList && playerList[i] ? (
-              <div className="px-5">
-                <Typography.Paragraph>
-                  Player {i + 1}{" "}
-                  {playerList[i].id === playerData.id && "(You)"}{" "}
-                  {playerList[i].room_role == "MASTER" && "(Host)"}
-                </Typography.Paragraph>
-                <Typography.Small className="text-green-secondary">
-                  {playerList[i].name}
-                </Typography.Small>
-              </div>
-            ) : (
-              <div className="px-5 flex justify-center items-center h-full">
-                <Typography.Small className="text-green-primary">
-                  Waiting for other player..
-                </Typography.Small>
-              </div>
-            )}
-          </Card>
-        ))}
+        {[...Array(5)].map((_, i) =>
+          !isLoading && playerList && playerList[i] ? (
+            <PlayerCard
+              key={i}
+              state={
+                isMaster(playerList[i])
+                  ? "master"
+                  : isSelf(playerList[i])
+                  ? "self"
+                  : isHost(playerList[i])
+                  ? "host"
+                  : "default"
+              }
+              playerNumber={i + 1}
+              playerData={playerList[i]}
+              role={currentPlayer?.room_role}
+            />
+          ) : (
+            <PlayerCard key={i} state="waiting" />
+          )
+        )}
       </div>
-      <Button.Primary className="w-full mt-4">Start Game</Button.Primary>
-      <Link href="/" className="w-full">
-        <Button.Secondary className="w-full mt-4">Leave Room</Button.Secondary>
-      </Link>
+      {currentPlayer?.room_role === "MASTER" ? (
+        <Button.Primary className="w-full mt-4">Start Game</Button.Primary>
+      ) : (
+        <Button.Secondary className="w-full mt-4" onClick={onLeave}>
+          Leave Room
+        </Button.Secondary>
+      )}
     </>
   );
 }
