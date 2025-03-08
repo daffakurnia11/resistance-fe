@@ -1,17 +1,11 @@
 import * as React from "react";
-import HostRoomCard from "./_components/HostRoomCard";
-import JoinRoomCard from "./_components/JoinRoomCard";
 import { Metadata } from "next";
+import Home from "./Home";
 
 export const metadata: Metadata = {
-  title: "Host or Join Room - Resistance",
+  title: "Host or Join Room - The Resistance",
 };
 
 export default function HomePage() {
-  return (
-    <div className="flex flex-col gap-4">
-      <HostRoomCard />
-      <JoinRoomCard />
-    </div>
-  );
+  return <Home />;
 }
