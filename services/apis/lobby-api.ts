@@ -32,11 +32,8 @@ class LobbyApi {
   }
 
   async leaveLobby(data: LobbyLeaveData) {
-    return axios({
-      method: "DELETE",
-      url: `${this.apiUrl}/leave`,
-      data,
-    })
+    return axios
+      .post(`${this.apiUrl}/leave`, data)
       .then((res) => res.data)
       .catch((err) => {
         throw err.response.data;

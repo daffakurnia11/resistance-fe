@@ -16,13 +16,20 @@ export const useJoinRoom = () => {
   const handleSubmit = async () => {
     try {
       await lobbyApi.join(payload).then((res) => {
-        setNotif({
-          title: "Room joined",
-          message: "You have successfully joined a room",
-        });
-        cookieStorage.save("lobbyData", res.data.lobby);
-        cookieStorage.save("playerData", res.data.player);
-        router.push(`/lobby?roomCode=${res.data.lobby.room_code}`);
+        if (res.success) {
+          setNotif({
+            title: "Room joined",
+            message: "You have successfully joined a room",
+          });
+          cookieStorage.save("lobbyData", res.data.lobby);
+          cookieStorage.save("playerData", res.data.player);
+          router.push(`/lobby?roomCode=${res.data.lobby.room_code}`);
+        } else {
+          setNotif({
+            title: "Error",
+            message: res.message,
+          });
+        }
       });
     } catch (err: any) {
       setNotif({
