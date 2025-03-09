@@ -9,7 +9,7 @@ import { PlayerResponseData } from "@/types/Player";
 
 export default function Lobby() {
   const { isLoading, lobbyRoom, playerList, currentPlayer } = useLobbyData();
-  const { onLeave } = useLobbyAction();
+  const { onLeave, onDelete } = useLobbyAction();
 
   if (!currentPlayer) {
     return null;
@@ -41,7 +41,7 @@ export default function Lobby() {
           Waiting for host to start game...
         </Typography.Paragraph>
       )}
-      <div className="flex flex-col gap-2 mt-5">
+      <div className="flex flex-col gap-2 mt-5 mb-10">
         {[...Array(5)].map((_, i) =>
           !isLoading && playerList && playerList[i] ? (
             <PlayerCard
@@ -65,12 +65,17 @@ export default function Lobby() {
         )}
       </div>
       {currentPlayer?.room_role === "MASTER" ? (
-        <Button.Primary
-          className="w-full mt-4"
-          disabled={playerList?.length !== 5}
-        >
-          Start Game
-        </Button.Primary>
+        <>
+          <Button.Primary
+            className="w-full mt-4"
+            disabled={playerList?.length !== 5}
+          >
+            Start Game
+          </Button.Primary>
+          <Button.Secondary className="w-full mt-4" onClick={onDelete}>
+            Delete Room
+          </Button.Secondary>
+        </>
       ) : (
         <Button.Secondary className="w-full mt-4" onClick={onLeave}>
           Leave Room

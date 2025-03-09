@@ -13,9 +13,18 @@ class LobbyApi {
       });
   }
 
-  async getLobby(roomCode: string) {
+  async get(roomCode: string) {
     return axios
-      .get(`${this.apiUrl}`, { params: { room_code: roomCode } })
+      .get(`${this.apiUrl}/${roomCode}`)
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
+
+  async delete(id: string) {
+    return axios
+      .delete(`${this.apiUrl}/${id}`)
       .then((res) => res.data)
       .catch((err) => {
         throw err.response.data;

@@ -1,4 +1,5 @@
 import { useSocket } from "@/hooks/use-socket";
+import { lobbyApi } from "@/services/apis/lobby-api";
 import { playerApi } from "@/services/apis/player-api";
 import { useLobbyApi } from "@/services/swrs/use-lobby";
 import { LobbyResponseData } from "@/types/Lobby";
@@ -36,8 +37,17 @@ export const useLobbyData = () => {
   }, [data]);
 
   useEffect(() => {
-    if (socketData) {
-      updateLobbyData(socketData);
+    if (socketData && 'room_code' in socketData) {
+      if (socketData.room_code) {
+        updateLobbyData(socketData);
+      } else {
+        cookieStorage.clear();
+        router.push("/");
+        setNotif({
+          title: "Room deleted",
+          message: "The room has been deleted by host",
+        });
+      }
     }
   }, [socketData]);
 
@@ -110,5 +120,20 @@ export const useLobbyAction = () => {
     }
   };
 
-  return { onLeave, onKick };
+  const onDelete = async () => {
+    try {
+      await lobbyApi.delete(lobby.id).then(() => {
+        router.push("/");
+        cookieStorage.clear();
+        setNotif({
+          title: "Lobby deleted",
+          message: "The lobby has been successfully deleted",
+        });
+      });
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  return { onLeave, onKick, onDelete };
 };
