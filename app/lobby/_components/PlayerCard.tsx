@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/16/solid";
 import React from "react";
 import { useLobbyAction } from "./Lobby.hook";
-import { PlayerResponseData } from "@/types/Lobby";
+import { PlayerResponseData } from "@/types/Player";
 
 type PlayerCardProps = {
   playerData?: PlayerResponseData;

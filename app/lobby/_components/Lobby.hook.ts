@@ -1,7 +1,8 @@
 import { useSocket } from "@/hooks/use-socket";
-import { lobbyApi } from "@/services/apis/lobby-api";
+import { playerApi } from "@/services/apis/player-api";
 import { useLobbyApi } from "@/services/swrs/use-lobby";
-import { LobbyResponseData, PlayerResponseData } from "@/types/Lobby";
+import { LobbyResponseData } from "@/types/Lobby";
+import { PlayerResponseData } from "@/types/Player";
 import cookieStorage from "@/utils/cookies-storage";
 import { notifContent } from "@/utils/jotai/atom";
 import { useSetAtom } from "jotai";
@@ -15,7 +16,7 @@ export const useLobbyData = () => {
   const currentPlayer: PlayerResponseData | null =
     cookieStorage.load("playerData");
   const { data, isLoading } = useLobbyApi(roomCode!);
-  const { socketData } = useSocket("lobby_update");
+  const { socketData } = useSocket("player_update");
   const [playerList, setPlayerList] = useState<PlayerResponseData[]>([]);
   const [lobbyRoom, setLobbyRoom] = useState<string>("");
   const setNotif = useSetAtom(notifContent);
@@ -78,7 +79,7 @@ export const useLobbyAction = () => {
     };
 
     try {
-      await lobbyApi.leaveLobby(payload).then(() => {
+      await playerApi.leave(payload).then(() => {
         router.push("/");
         cookieStorage.clear();
         setNotif({
@@ -98,7 +99,7 @@ export const useLobbyAction = () => {
     };
 
     try {
-      await lobbyApi.leaveLobby(payload).then(() => {
+      await playerApi.leave(payload).then(() => {
         setNotif({
           title: "Kicked player",
           message: "You have successfully kicked a player",

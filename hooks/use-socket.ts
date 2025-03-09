@@ -13,7 +13,7 @@ export const useSocket = (socketKey: string) => {
     socket.on("connect", () => {
       console.log("Connected to websocket")
     })
-    socket.on('lobby_update', handleData);
+    socket.on(socketKey, handleData);
     socket.on("disconnect", () => {
       console.log("Disconnected from websocket")
     })

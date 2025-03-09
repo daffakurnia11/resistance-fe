@@ -1,4 +1,4 @@
-import { lobbyApi } from "@/services/apis/lobby-api";
+import { playerApi } from "@/services/apis/player-api";
 import cookieStorage from "@/utils/cookies-storage";
 import { notifContent } from "@/utils/jotai/atom";
 import { useSetAtom } from "jotai";
@@ -15,7 +15,7 @@ export const useJoinRoom = () => {
 
   const handleSubmit = async () => {
     try {
-      await lobbyApi.join(payload).then((res) => {
+      await playerApi.join(payload).then((res) => {
         if (res.success) {
           setNotif({
             title: "Room joined",

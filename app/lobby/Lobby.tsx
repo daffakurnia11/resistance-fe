@@ -5,7 +5,7 @@ import Typography from "@/components/typography";
 import React from "react";
 import { useLobbyAction, useLobbyData } from "./_components/Lobby.hook";
 import PlayerCard from "./_components/PlayerCard";
-import { PlayerResponseData } from "@/types/Lobby";
+import { PlayerResponseData } from "@/types/Player";
 
 export default function Lobby() {
   const { isLoading, lobbyRoom, playerList, currentPlayer } = useLobbyData();
@@ -32,10 +32,16 @@ export default function Lobby() {
       <Typography.Heading level={3} className="text-center">
         Room {lobbyRoom}
       </Typography.Heading>
-      <Typography.Paragraph className="text-center mb-5 text-green-primary">
-        Waiting for players to join...
-      </Typography.Paragraph>
-      <div className="flex flex-col gap-2">
+      {playerList && playerList.length !== 5 ? (
+        <Typography.Paragraph className="text-center text-green-primary">
+          Waiting for players to join...
+        </Typography.Paragraph>
+      ) : (
+        <Typography.Paragraph className="text-center text-green-primary">
+          Waiting for host to start game...
+        </Typography.Paragraph>
+      )}
+      <div className="flex flex-col gap-2 mt-5">
         {[...Array(5)].map((_, i) =>
           !isLoading && playerList && playerList[i] ? (
             <PlayerCard
@@ -59,7 +65,12 @@ export default function Lobby() {
         )}
       </div>
       {currentPlayer?.room_role === "MASTER" ? (
-        <Button.Primary className="w-full mt-4">Start Game</Button.Primary>
+        <Button.Primary
+          className="w-full mt-4"
+          disabled={playerList?.length !== 5}
+        >
+          Start Game
+        </Button.Primary>
       ) : (
         <Button.Secondary className="w-full mt-4" onClick={onLeave}>
           Leave Room

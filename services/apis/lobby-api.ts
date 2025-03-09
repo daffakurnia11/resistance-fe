@@ -1,8 +1,8 @@
-import { LobbyCreateData, LobbyJoinData, LobbyLeaveData } from "@/types/Lobby";
+import { LobbyCreateData } from "@/types/Lobby";
 import axios from "axios";
 
 class LobbyApi {
-  public apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/lobbies`;
+  public apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/lobby`;
 
   async create(data: LobbyCreateData) {
     return axios
@@ -13,27 +13,9 @@ class LobbyApi {
       });
   }
 
-  async join(data: LobbyJoinData) {
-    return axios
-      .post(`${this.apiUrl}/join`, data)
-      .then((res) => res.data)
-      .catch((err) => {
-        throw err.response.data;
-      });
-  }
-
   async getLobby(roomCode: string) {
     return axios
       .get(`${this.apiUrl}`, { params: { room_code: roomCode } })
-      .then((res) => res.data)
-      .catch((err) => {
-        throw err.response.data;
-      });
-  }
-
-  async leaveLobby(data: LobbyLeaveData) {
-    return axios
-      .post(`${this.apiUrl}/leave`, data)
       .then((res) => res.data)
       .catch((err) => {
         throw err.response.data;
