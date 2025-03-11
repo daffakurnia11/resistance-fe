@@ -109,7 +109,7 @@ export const useLobbyAction = () => {
     };
 
     try {
-      await playerApi.leave(payload).then(() => {
+      await playerApi.kick(payload).then(() => {
         setNotif({
           title: "Kicked player",
           message: "You have successfully kicked a player",

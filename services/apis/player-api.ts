@@ -21,6 +21,15 @@ class PlayerApi {
         throw err.response.data;
       });
   }
+
+  async kick(data: PlayerLeavePayload) {
+    return axios
+      .post(`${this.apiUrl}/kick`, data)
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
 }
 
 export const playerApi = new PlayerApi();
