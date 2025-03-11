@@ -17,7 +17,8 @@ export const useLobbyData = () => {
   const currentPlayer: PlayerResponseData | null =
     cookieStorage.load("playerData");
   const { data, isLoading } = useLobbyApi(roomCode!);
-  const { socketData } = useSocket("player_update");
+  const { socketData: playerSocket } = useSocket("player_update");
+  const { socketData: lobbySocket } = useSocket("lobby_log");
   const [playerList, setPlayerList] = useState<PlayerResponseData[]>([]);
   const [lobbyRoom, setLobbyRoom] = useState<string>("");
   const setNotif = useSetAtom(notifContent);
@@ -37,19 +38,10 @@ export const useLobbyData = () => {
   }, [data]);
 
   useEffect(() => {
-    if (socketData && 'room_code' in socketData) {
-      if (socketData.room_code) {
-        updateLobbyData(socketData);
-      } else {
-        cookieStorage.clear();
-        router.push("/");
-        setNotif({
-          title: "Room deleted",
-          message: "The room has been deleted by host",
-        });
-      }
+    if (playerSocket) {
+      updateLobbyData(playerSocket);
     }
-  }, [socketData]);
+  }, [playerSocket]);
 
   useEffect(() => {
     if (
@@ -67,6 +59,41 @@ export const useLobbyData = () => {
       });
     }
   }, [playerList]);
+
+  useEffect(() => {
+    const player: PlayerResponseData = cookieStorage.load("playerData")!;
+    if (
+      lobbySocket &&
+      lobbySocket.action &&
+      player &&
+      player.id !== lobbySocket.player_id
+    ) {
+      switch (lobbySocket.action) {
+        case "JOIN":
+          setNotif({
+            title: "Player has joined the lobby",
+          });
+          return;
+        case "LEAVE":
+          setNotif({
+            title: "Player has left the lobby",
+          });
+          return;
+        case "KICK":
+          setNotif({
+            title: "Player has been kicked by the host",
+          });
+          return;
+        case "DISBAND":
+          cookieStorage.clear();
+          router.push("/");
+          setNotif({
+            title: "Lobby has been deleted by the host",
+          });
+          return;
+      }
+    }
+  }, [lobbySocket]);
 
   return {
     isLoading,
@@ -109,12 +136,7 @@ export const useLobbyAction = () => {
     };
 
     try {
-      await playerApi.kick(payload).then(() => {
-        setNotif({
-          title: "Kicked player",
-          message: "You have successfully kicked a player",
-        });
-      });
+      await playerApi.kick(payload);
     } catch (err: any) {
       console.log(err);
     }
@@ -125,10 +147,6 @@ export const useLobbyAction = () => {
       await lobbyApi.delete(lobby.id).then(() => {
         router.push("/");
         cookieStorage.clear();
-        setNotif({
-          title: "Lobby deleted",
-          message: "The lobby has been successfully deleted",
-        });
       });
     } catch (err: any) {
       console.log(err);
