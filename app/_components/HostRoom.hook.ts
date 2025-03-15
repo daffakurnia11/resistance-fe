@@ -24,10 +24,17 @@ export const useHostRoom = () => {
         router.push(`/lobby?roomCode=${res.data.lobby.room_code}`);
       });
     } catch (err: any) {
-      setNotif({
-        title: "Error",
-        message: err.error.message[0],
-      });
+      try {
+        setNotif({
+          title: "Error",
+          message: err.error.message[0],
+        });
+      } catch (error: any) {
+        setNotif({
+          title: "Error",
+          message: "Something went wrong",
+        });
+      }
     }
   };
 

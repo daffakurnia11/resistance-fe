@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Card from "@/components/card";
 import Typography from "@/components/typography";
@@ -22,19 +22,19 @@ interface DefaultProps extends PlayerCardProps {
 
 const NoPlayerCard = () => {
   return (
-    <Card className="h-20">
+    <Card.Base className="h-20">
       <div className="px-5 flex justify-center items-center h-full">
         <Typography.Small className="text-green-primary">
           Waiting for other player..
         </Typography.Small>
       </div>
-    </Card>
+    </Card.Base>
   );
 };
 
 const HostPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
   return (
-    <Card className="h-20">
+    <Card.Base className="h-20">
       <div className="px-5">
         <Typography.Paragraph>
           Player {playerNumber} (Host)
@@ -43,7 +43,7 @@ const HostPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
           {playerData!.name}
         </Typography.Small>
       </div>
-    </Card>
+    </Card.Base>
   );
 };
 
@@ -60,20 +60,20 @@ const SelfPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
   );
 
   return (
-    <Card className="h-20" action={LeaveComponent}>
+    <Card.Base className="h-20" action={LeaveComponent}>
       <div className="px-5">
         <Typography.Paragraph>Player {playerNumber} (You)</Typography.Paragraph>
         <Typography.Small className="text-green-secondary">
           {playerData!.name}
         </Typography.Small>
       </div>
-    </Card>
+    </Card.Base>
   );
 };
 
 const MasterPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
   return (
-    <Card className="h-20">
+    <Card.Base className="h-20">
       <div className="px-5">
         <Typography.Paragraph>
           Player {playerNumber} (Host) (You)
@@ -82,28 +82,35 @@ const MasterPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
           {playerData!.name}
         </Typography.Small>
       </div>
-    </Card>
+    </Card.Base>
   );
 };
 
-const DefaultPlayerCard = ({ playerData, playerNumber, role }: PlayerCardProps) => {
+const DefaultPlayerCard = ({
+  playerData,
+  playerNumber,
+  role,
+}: PlayerCardProps) => {
   const { onKick } = useLobbyAction();
-  
+
   const KickComponent = (
-    <button className="bg-green-primary rounded-full p-1.5 w-7 h-7 cursor-pointer" onClick={() => onKick(playerData!.id)}>
+    <button
+      className="bg-green-primary rounded-full p-1.5 w-7 h-7 cursor-pointer"
+      onClick={() => onKick(playerData!.id)}
+    >
       <XMarkIcon className="size-4 text-light" />
     </button>
   );
 
   return (
-    <Card className="h-20" action={role === "MASTER" ? KickComponent : ""}>
+    <Card.Base className="h-20" action={role === "MASTER" ? KickComponent : ""}>
       <div className="px-5">
         <Typography.Paragraph>Player {playerNumber}</Typography.Paragraph>
         <Typography.Small className="text-green-secondary">
           {playerData!.name}
         </Typography.Small>
       </div>
-    </Card>
+    </Card.Base>
   );
 };
 

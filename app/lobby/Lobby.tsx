@@ -29,7 +29,7 @@ export default function Lobby() {
 
   return (
     <>
-      <Typography.Heading level={3} className="text-center">
+      <Typography.Heading as={"h1"} level={3} className="text-center">
         Room {lobbyRoom}
       </Typography.Heading>
       {playerList && playerList.length !== 5 ? (

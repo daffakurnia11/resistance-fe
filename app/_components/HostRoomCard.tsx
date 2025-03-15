@@ -11,9 +11,11 @@ export default function HostRoomCard() {
   const { payload, setPayload, handleSubmit } = useHostRoom();
 
   return (
-    <Card className="w-[300px] mx-auto">
+    <Card.Base className="w-[300px] mx-auto">
       <div className="flex flex-col items-center justify-center h-full w-full">
-        <Typography.Heading level={4}>Host Room</Typography.Heading>
+        <Typography.Heading as={"h1"} level={4}>
+          Host Room
+        </Typography.Heading>
         <Input
           placeholder="Your name"
           className="w-full my-4"
@@ -23,6 +25,6 @@ export default function HostRoomCard() {
           Create
         </Button.Primary>
       </div>
-    </Card>
+    </Card.Base>
   );
 }

@@ -32,10 +32,17 @@ export const useJoinRoom = () => {
         }
       });
     } catch (err: any) {
-      setNotif({
-        title: "Error",
-        message: err.error.message[0],
-      });
+      try {
+        setNotif({
+          title: "Error",
+          message: err.error.message[0],
+        });
+      } catch (error: any) {
+        setNotif({
+          title: "Error",
+          message: "Something went wrong",
+        });
+      }
     }
   };
 
