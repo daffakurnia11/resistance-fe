@@ -8,7 +8,7 @@ import cookieStorage from "@/utils/cookies-storage";
 import { notifContent } from "@/utils/jotai/atom";
 import { useSetAtom } from "jotai";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useLobbyData = () => {
   const params = useSearchParams();
@@ -23,25 +23,21 @@ export const useLobbyData = () => {
   const [lobbyRoom, setLobbyRoom] = useState<string>("");
   const setNotif = useSetAtom(notifContent);
 
-  const updateLobbyData = (data: {
-    players: PlayerResponseData[];
-    room_code: string;
-  }) => {
-    setPlayerList(data.players);
-    setLobbyRoom(data.room_code);
-  };
+  const updateLobbyData = useCallback(
+    (newData: { players: PlayerResponseData[]; room_code: string }) => {
+      setPlayerList(newData.players);
+      setLobbyRoom(newData.room_code);
+    },
+    []
+  );
 
   useEffect(() => {
-    if (data) {
-      updateLobbyData(data.data);
-    }
-  }, [data]);
+    if (data) updateLobbyData(data.data);
+  }, [data, updateLobbyData]);
 
   useEffect(() => {
-    if (playerSocket) {
-      updateLobbyData(playerSocket);
-    }
-  }, [playerSocket]);
+    if (playerSocket) updateLobbyData(playerSocket);
+  }, [playerSocket, updateLobbyData]);
 
   useEffect(() => {
     if (
@@ -61,46 +57,32 @@ export const useLobbyData = () => {
   }, [playerList]);
 
   useEffect(() => {
+    if (!lobbySocket) return;
+
     const player: PlayerResponseData = cookieStorage.load("playerData")!;
-    if (
-      lobbySocket &&
-      lobbySocket.action &&
-      player &&
-      player.id !== lobbySocket.player_id
-    ) {
-      switch (lobbySocket.action) {
-        case "JOIN":
-          setNotif({
-            title: "Player has joined the lobby",
-          });
-          return;
-        case "LEAVE":
-          setNotif({
-            title: "Player has left the lobby",
-          });
-          return;
-        case "KICK":
-          setNotif({
-            title: "Player has been kicked by the host",
-          });
-          return;
-        case "DISBAND":
-          cookieStorage.clear();
-          router.push("/");
-          setNotif({
-            title: "Lobby has been deleted by the host",
-          });
-          return;
+    if (!player) return;
+
+    if (lobbySocket.action === "DISBAND") {
+      cookieStorage.clear();
+      router.push("/");
+      setNotif({ title: "Lobby has been deleted by the host" });
+      return;
+    }
+
+    if (player.id !== lobbySocket.player_id) {
+      const messages: any = {
+        JOIN: "Player has joined the lobby",
+        LEAVE: "Player has left the lobby",
+        KICK: "Player has been kicked by the host",
+      };
+
+      if (lobbySocket.action in messages) {
+        setNotif({ title: messages[lobbySocket.action] });
       }
     }
-  }, [lobbySocket]);
+  }, [lobbySocket, router, setNotif]);
 
-  return {
-    isLoading,
-    lobbyRoom,
-    playerList,
-    currentPlayer,
-  };
+  return { isLoading, lobbyRoom, playerList, currentPlayer };
 };
 
 export const useLobbyAction = () => {
