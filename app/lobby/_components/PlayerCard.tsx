@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { useLobbyAction } from "./Lobby.hook";
 import { PlayerResponseData } from "@/types/Player";
+import Loading from "@/components/loading";
 
 type PlayerCardProps = {
   playerData?: PlayerResponseData;
@@ -17,7 +18,8 @@ type PlayerCardProps = {
 };
 
 interface DefaultProps extends PlayerCardProps {
-  state: "waiting" | "host" | "self" | "master" | "default";
+  state: "waiting" | "host" | "self" | "master" | "default" | "loading";
+  isLoading?: boolean;
 }
 
 const NoPlayerCard = () => {
@@ -114,6 +116,23 @@ const DefaultPlayerCard = ({
   );
 };
 
+const LoadingPlayerCard = ({ isLoading }: { isLoading: boolean }) => {
+  return (
+    <Card.Base className="h-20">
+      <div className="px-5">
+        <Loading
+          className="w-3/4 h-[16px] mb-1.5 !ms-0 !me-auto"
+          isLoading={isLoading}
+        ></Loading>
+        <Loading
+          className="w-1/2 h-[16px] !ms-0 !me-auto"
+          isLoading={isLoading}
+        ></Loading>
+      </div>
+    </Card.Base>
+  );
+};
+
 export default function PlayerCard({ state, ...props }: DefaultProps) {
   switch (state) {
     case "waiting":
@@ -124,6 +143,8 @@ export default function PlayerCard({ state, ...props }: DefaultProps) {
       return <SelfPlayerCard {...props} />;
     case "master":
       return <MasterPlayerCard {...props} />;
+    case "loading":
+      return <LoadingPlayerCard isLoading={props.isLoading!} />;
     default:
       return <DefaultPlayerCard {...props} />;
   }

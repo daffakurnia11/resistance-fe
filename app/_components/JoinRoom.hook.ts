@@ -1,11 +1,12 @@
 import { playerApi } from "@/services/apis/player-api";
 import cookieStorage from "@/utils/cookies-storage";
-import { notifContent } from "@/utils/jotai/atom";
-import { useSetAtom } from "jotai";
+import { loadingAtom, notifContent } from "@/utils/jotai/atom";
+import { useAtom, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 export const useJoinRoom = () => {
+  const [isLoading, setIsLoading] = useAtom(loadingAtom);
   const [payload, setPayload] = React.useState({
     name: "",
     room_code: "",
@@ -14,6 +15,7 @@ export const useJoinRoom = () => {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       await playerApi.join(payload).then((res) => {
         if (res.success) {
@@ -43,10 +45,13 @@ export const useJoinRoom = () => {
           message: "Something went wrong",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
+    isLoading,
     payload,
     setPayload,
     handleSubmit,

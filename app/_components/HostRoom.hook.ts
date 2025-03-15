@@ -1,11 +1,12 @@
 import { lobbyApi } from "@/services/apis/lobby-api";
 import cookieStorage from "@/utils/cookies-storage";
-import { notifContent } from "@/utils/jotai/atom";
-import { useSetAtom } from "jotai";
+import { loadingAtom, notifContent } from "@/utils/jotai/atom";
+import { useAtom, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 export const useHostRoom = () => {
+  const [isLoading, setIsLoading] = useAtom(loadingAtom);
   const [payload, setPayload] = React.useState({
     name: "",
   });
@@ -13,6 +14,7 @@ export const useHostRoom = () => {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       await lobbyApi.create(payload).then((res) => {
         setNotif({
@@ -35,10 +37,13 @@ export const useHostRoom = () => {
           message: "Something went wrong",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
+    isLoading,
     payload,
     setPayload,
     handleSubmit,

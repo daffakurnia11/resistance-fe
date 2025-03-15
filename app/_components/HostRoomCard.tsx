@@ -8,7 +8,7 @@ import * as React from "react";
 import { useHostRoom } from "./HostRoom.hook";
 
 export default function HostRoomCard() {
-  const { payload, setPayload, handleSubmit } = useHostRoom();
+  const { isLoading, payload, setPayload, handleSubmit } = useHostRoom();
 
   return (
     <Card.Base className="w-[300px] mx-auto">
@@ -20,8 +20,13 @@ export default function HostRoomCard() {
           placeholder="Your name"
           className="w-full my-4"
           onChange={(e) => setPayload({ ...payload, name: e.target.value })}
+          disabled={isLoading}
         />
-        <Button.Primary className="w-full" onClick={handleSubmit}>
+        <Button.Primary
+          className="w-full"
+          onClick={handleSubmit}
+          disabled={isLoading}
+        >
           Create
         </Button.Primary>
       </div>

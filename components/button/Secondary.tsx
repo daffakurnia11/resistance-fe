@@ -13,7 +13,7 @@ export default function ButtonSecondary({
     <button
       {...props}
       className={clsx(
-        "bg-black border border-solid border-green-primary py-2 px-5 rounded-2xl flex items-center justify-center hover:bg-green-secondary group transition duration-300 text-base",
+        "bg-black border border-solid border-green-primary py-2 px-5 rounded-2xl flex items-center justify-center enabled:hover:bg-green-secondary group transition duration-300 text-base disabled:opacity-30 disabled:cursor-not-allowed",
         className
       )}
     >

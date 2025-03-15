@@ -11,7 +11,7 @@ import { useJoinRoom } from "./JoinRoom.hook";
 export default function JoinRoomCard() {
   const searchParams = useSearchParams();
   const room = searchParams.get("room");
-  const { payload, setPayload, handleSubmit } = useJoinRoom();
+  const { isLoading, payload, setPayload, handleSubmit } = useJoinRoom();
 
   return (
     <Card.Base className="w-[300px] mx-auto">
@@ -23,6 +23,7 @@ export default function JoinRoomCard() {
           placeholder="Your name"
           className="w-full my-4"
           onChange={(e) => setPayload({ ...payload, name: e.target.value })}
+          disabled={isLoading}
         />
         <Input
           defaultValue={room ?? ""}
@@ -31,8 +32,13 @@ export default function JoinRoomCard() {
           onChange={(e) =>
             setPayload({ ...payload, room_code: e.target.value })
           }
+          disabled={isLoading}
         />
-        <Button.Primary className="w-full" onClick={handleSubmit}>
+        <Button.Primary
+          className="w-full"
+          onClick={handleSubmit}
+          disabled={isLoading}
+        >
           Join
         </Button.Primary>
       </div>
