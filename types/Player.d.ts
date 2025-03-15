@@ -16,4 +16,6 @@ export type PlayerResponseData = {
   name: string;
   lobby_id: string;
   room_role: "MASTER" | "MEMBER";
+  role?: "SPY" | "RESISTANCE" | null;
+  teammate?: PlayerResponseData[];
 };

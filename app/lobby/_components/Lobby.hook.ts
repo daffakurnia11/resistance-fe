@@ -58,6 +58,7 @@ export const useLobbyData = () => {
 
   useEffect(() => {
     if (!lobbySocket) return;
+    console.log(lobbySocket.action)
 
     const player: PlayerResponseData = cookieStorage.load("playerData")!;
     if (!player) return;
@@ -66,6 +67,16 @@ export const useLobbyData = () => {
       cookieStorage.clear();
       router.push("/");
       setNotif({ title: "Lobby has been deleted by the host" });
+      return;
+    }
+
+    if (lobbySocket.action === "ASSIGN") {
+      if (player.id === lobbySocket.player_id) {
+        setNotif({ title: "You started the game" });
+      } else {
+        setNotif({ title: "Game has started by host" });
+      }
+      router.push(`/lobby/${lobbyRoom}/reveal`);
       return;
     }
 
@@ -81,6 +92,10 @@ export const useLobbyData = () => {
       }
     }
   }, [lobbySocket, router, setNotif]);
+
+  if (currentPlayer?.role) {
+    router.push(`/lobby/${roomCode}/reveal`);
+  }
 
   return { isLoading, lobbyRoom, playerList, currentPlayer };
 };
