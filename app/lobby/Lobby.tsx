@@ -9,7 +9,7 @@ import { PlayerResponseData } from "@/types/Player";
 
 export default function Lobby() {
   const { isLoading, lobbyRoom, playerList, currentPlayer } = useLobbyData();
-  const { onLeave, onDelete } = useLobbyAction();
+  const { onLeave, onDelete, onStart } = useLobbyAction();
 
   if (!currentPlayer) {
     return null;
@@ -69,6 +69,7 @@ export default function Lobby() {
           <Button.Primary
             className="w-full mt-4"
             disabled={playerList?.length !== 5}
+            onClick={onStart}
           >
             Start Game
           </Button.Primary>

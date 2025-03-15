@@ -135,5 +135,15 @@ export const useLobbyAction = () => {
     }
   };
 
-  return { onLeave, onKick, onDelete };
+  const onStart = async () => {
+    try {
+      await playerApi.assign(lobby.id).then(() => {
+        router.push(`/lobby/${lobby.room_code}/reveal`);
+      });
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  return { onLeave, onKick, onDelete, onStart };
 };

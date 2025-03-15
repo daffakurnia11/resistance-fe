@@ -30,6 +30,17 @@ class PlayerApi {
         throw err.response.data;
       });
   }
+
+  async assign(id: string) {
+    return axios
+      .post(`${this.apiUrl}/assign`, {
+        lobby_id: id,
+      })
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
 }
 
 export const playerApi = new PlayerApi();
