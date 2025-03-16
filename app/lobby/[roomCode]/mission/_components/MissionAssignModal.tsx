@@ -45,7 +45,11 @@ export default function MissionAssignModal({
   };
 
   const handleAssign = () => {
-    console.log("POST /mission/{lobby_id}/assign", "Payload:", selectedPlayers);
+    console.log(
+      "POST /mission/{mission_id}/assign",
+      "Payload:",
+      selectedPlayers
+    );
     setModal({ ...modal, open: false });
   };
 

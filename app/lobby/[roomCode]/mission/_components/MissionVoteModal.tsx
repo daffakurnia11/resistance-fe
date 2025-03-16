@@ -17,7 +17,7 @@ export default function MissionVoteModal({
   const [modal, setModal] = useAtom(modalAtom);
 
   const handleVote = (vote: "APPROVE" | "REJECT") => {
-    console.log("POST /mission/{lobby_id}/vote", "Payload:", {
+    console.log("POST /mission/{mission_id}/vote", "Payload:", {
       player_id: player.id,
       vote,
     });

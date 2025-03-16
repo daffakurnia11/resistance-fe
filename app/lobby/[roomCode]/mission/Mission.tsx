@@ -32,7 +32,7 @@ export default function Mission() {
     });
   };
 
-  console.log("GET /mission/{lobby_id}", fakeMission);
+  console.log("GET /lobby/{lobby_id}/mission", fakeMission);
   return (
     <>
       <Typography.Heading
