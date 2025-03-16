@@ -8,3 +8,11 @@ export const useLobbyApi = (roomCode: string) => {
 
   return response;
 };
+
+export const useLobbyPlayerApi = (roomCode: string) => {
+  const response = useSWR(`${lobbyApi.apiUrl}/${roomCode}/player`, () =>
+    lobbyApi.getPlayers(roomCode)
+  );
+
+  return response;
+};

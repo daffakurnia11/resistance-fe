@@ -12,31 +12,41 @@
         "id": 3,
         "name": "Player 3"
       },
+      "mission_players": [
+        {
+          "id": 2,
+          "name": "Player 2"
+        },
+        {
+          "id": 3,
+          "name": "Player 3"
+        }
+      ],
       "mission_votes": [
         {
-          "player_id": 1,
+          "id": 1,
           "name": "Player 1",
           "vote": "APPROVE"
         },
         {
-          "player_id": 2,
+          "id": 2,
           "name": "Player 2",
           "vote": "APPROVE"
         },
         {
-          "player_id": 3,
+          "id": 3,
           "name": "Player 3",
-          "vote": "REJECT"
+          "vote": "APPROVE"
         },
         {
-          "player_id": 4,
+          "id": 4,
           "name": "Player 4",
           "vote": "APPROVE"
         },
         {
-          "player_id": 5,
+          "id": 5,
           "name": "Player 5",
-          "vote": "REJECT"
+          "vote": "APPROVE"
         }
       ]
     },
@@ -49,29 +59,43 @@
         "id": 5,
         "name": "Player 5"
       },
+      "mission_players": [
+        {
+          "id": 1,
+          "name": "Player 1"
+        },
+        {
+          "id": 3,
+          "name": "Player 3"
+        },
+        {
+          "id": 4,
+          "name": "Player 4"
+        }
+      ],
       "mission_votes": [
         {
-          "player_id": 1,
+          "id": 1,
           "name": "Player 1",
           "vote": "REJECT"
         },
         {
-          "player_id": 2,
+          "id": 2,
           "name": "Player 2",
           "vote": "REJECT"
         },
         {
-          "player_id": 3,
+          "id": 3,
           "name": "Player 3",
           "vote": "APPROVE"
         },
         {
-          "player_id": 4,
+          "id": 4,
           "name": "Player 4",
           "vote": "APPROVE"
         },
         {
-          "player_id": 5,
+          "id": 5,
           "name": "Player 5",
           "vote": "APPROVE"
         }
@@ -80,49 +104,34 @@
     {
       "id": 3,
       "name": "Mission 3",
-      "result": "SUCCESS",
-      "status": "CLOSED",
+      "result": null,
+      "status": "VOTING",
       "leader": {
-        "id": 2,
-        "name": "Player 2"
+        "id": 1,
+        "name": "Player 1"
       },
-      "mission_votes": [
+      "mission_players": [
         {
-          "player_id": 1,
-          "name": "Player 1",
-          "vote": "APPROVE"
+          "id": 4,
+          "name": "Player 4"
         },
         {
-          "player_id": 2,
-          "name": "Player 2",
-          "vote": "REJECT"
-        },
-        {
-          "player_id": 3,
-          "name": "Player 3",
-          "vote": "APPROVE"
-        },
-        {
-          "player_id": 4,
-          "name": "Player 4",
-          "vote": "APPROVE"
-        },
-        {
-          "player_id": 5,
-          "name": "Player 5",
-          "vote": "APPROVE"
+          "id": 5,
+          "name": "Player 5"
         }
-      ]
+      ],
+      "mission_votes": []
     },
     {
       "id": 4,
       "name": "Mission 4",
       "result": null,
-      "status": "IN PLAY",
+      "status": "ASSIGNING",
       "leader": {
-        "id": 1,
-        "name": "Player 1"
+        "id": 2,
+        "name": "Player 2"
       },
+      "mission_players": [],
       "mission_votes": []
     },
     {
@@ -134,6 +143,7 @@
         "id": 4,
         "name": "Player 4"
       },
+      "mission_players": [],
       "mission_votes": []
     }
   ]

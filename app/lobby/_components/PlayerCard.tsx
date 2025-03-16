@@ -123,11 +123,11 @@ const LoadingPlayerCard = ({ isLoading }: { isLoading: boolean }) => {
         <Loading
           className="w-3/4 h-[16px] mb-1.5 !ms-0 !me-auto"
           isLoading={isLoading}
-        ></Loading>
+        />
         <Loading
           className="w-1/2 h-[16px] !ms-0 !me-auto"
           isLoading={isLoading}
-        ></Loading>
+        />
       </div>
     </Card.Base>
   );

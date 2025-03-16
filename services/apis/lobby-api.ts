@@ -30,6 +30,15 @@ class LobbyApi {
         throw err.response.data;
       });
   }
+
+  async getPlayers(roomCode: string) {
+    return axios
+      .get(`${this.apiUrl}/${roomCode}/player`)
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
 }
 
 export const lobbyApi = new LobbyApi();
