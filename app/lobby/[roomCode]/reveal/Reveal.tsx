@@ -8,9 +8,12 @@ import React from "react";
 import { useReveal } from "./_components/Reveal.hook";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function Reveal() {
   const { data, isLoading, player, countdown } = useReveal();
+  const roomCode = useParams().roomCode;
 
   const FrontCard = (
     <Typography.Paragraph className="text-center text-green-primary">
@@ -73,9 +76,11 @@ export default function Reveal() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Button.Primary className="w-full mt-6">
-              Start the missions!
-            </Button.Primary>
+            <Link href={`/lobby/${roomCode}/mission`}>
+              <Button.Primary className="w-full mt-6">
+                Start the missions!
+              </Button.Primary>
+            </Link>
           </motion.div>
         ) : (
           <div className="content-none h-10 w-full mt-6"></div>

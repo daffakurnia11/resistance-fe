@@ -1,0 +1,140 @@
+{
+  "code": 200,
+  "success": true,
+  "message": "OK",
+  "data": [
+    {
+      "id": 1,
+      "name": "Mission 1",
+      "result": "SUCCESS",
+      "status": "CLOSED",
+      "leader": {
+        "id": 3,
+        "name": "Player 3"
+      },
+      "mission_votes": [
+        {
+          "player_id": 1,
+          "name": "Player 1",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 2,
+          "name": "Player 2",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 3,
+          "name": "Player 3",
+          "vote": "REJECT"
+        },
+        {
+          "player_id": 4,
+          "name": "Player 4",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 5,
+          "name": "Player 5",
+          "vote": "REJECT"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Mission 2",
+      "result": "FAIL",
+      "status": "CLOSED",
+      "leader": {
+        "id": 5,
+        "name": "Player 5"
+      },
+      "mission_votes": [
+        {
+          "player_id": 1,
+          "name": "Player 1",
+          "vote": "REJECT"
+        },
+        {
+          "player_id": 2,
+          "name": "Player 2",
+          "vote": "REJECT"
+        },
+        {
+          "player_id": 3,
+          "name": "Player 3",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 4,
+          "name": "Player 4",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 5,
+          "name": "Player 5",
+          "vote": "APPROVE"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Mission 3",
+      "result": "SUCCESS",
+      "status": "CLOSED",
+      "leader": {
+        "id": 2,
+        "name": "Player 2"
+      },
+      "mission_votes": [
+        {
+          "player_id": 1,
+          "name": "Player 1",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 2,
+          "name": "Player 2",
+          "vote": "REJECT"
+        },
+        {
+          "player_id": 3,
+          "name": "Player 3",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 4,
+          "name": "Player 4",
+          "vote": "APPROVE"
+        },
+        {
+          "player_id": 5,
+          "name": "Player 5",
+          "vote": "APPROVE"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Mission 4",
+      "result": null,
+      "status": "IN PLAY",
+      "leader": {
+        "id": 1,
+        "name": "Player 1"
+      },
+      "mission_votes": []
+    },
+    {
+      "id": 5,
+      "name": "Mission 5",
+      "result": null,
+      "status": "OPEN",
+      "leader": {
+        "id": 4,
+        "name": "Player 4"
+      },
+      "mission_votes": []
+    }
+  ]
+}
