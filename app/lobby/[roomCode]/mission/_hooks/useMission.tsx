@@ -4,12 +4,13 @@ import { useSetAtom } from "jotai";
 import MissionAssignModal from "../_components/MissionAssignModal";
 import MissionVoteModal from "../_components/MissionVoteModal";
 import MissionResultModal from "../_components/MissionResultModal";
-import fakeMission from "../fakeData.json";
 import { useParams } from "next/navigation";
+import { useLobbyMissionApi } from "@/services/swrs/use-lobby";
 
 export const useMission = () => {
   const setModal = useSetAtom(modalAtom);
   const roomCode = useParams().roomCode;
+  const { data, isLoading } = useLobbyMissionApi(roomCode as string);
 
   const openModal = (mission: MissionResponseType) => {
     setModal({
@@ -27,7 +28,5 @@ export const useMission = () => {
     });
   };
 
-  console.log(`GET /lobby/${roomCode}/mission`, fakeMission);
-
-  return { fakeMission, openModal };
+  return { data, isLoading, openModal };
 };

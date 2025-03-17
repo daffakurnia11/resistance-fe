@@ -39,6 +39,15 @@ class LobbyApi {
         throw err.response.data;
       });
   }
+
+  async getMission(roomCode: string) {
+    return axios
+      .get(`${this.apiUrl}/${roomCode}/mission`)
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
 }
 
 export const lobbyApi = new LobbyApi();

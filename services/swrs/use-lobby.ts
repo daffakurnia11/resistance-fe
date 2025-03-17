@@ -16,3 +16,11 @@ export const useLobbyPlayerApi = (roomCode: string) => {
 
   return response;
 };
+
+export const useLobbyMissionApi = (roomCode: string) => {
+  const response = useSWR(`${lobbyApi.apiUrl}/${roomCode}/mission`, () =>
+    lobbyApi.getMission(roomCode)
+  );
+
+  return response;
+};
