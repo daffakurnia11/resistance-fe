@@ -34,11 +34,10 @@ export const useMissionAssign = (mission: MissionResponseType) => {
   };
 
   const handleAssign = () => {
-    console.log(
-      "POST /mission/{mission_id}/assign",
-      "Payload:",
-      selectedPlayers
-    );
+    console.log("POST /mission/{mission_id}/assign", "Payload:", {
+      leader_id: mission.leader.id,
+      player_ids: selectedPlayers,
+    });
     setModal({ ...modal, open: false });
   };
 

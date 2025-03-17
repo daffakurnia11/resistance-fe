@@ -5,9 +5,11 @@ import MissionAssignModal from "../_components/MissionAssignModal";
 import MissionVoteModal from "../_components/MissionVoteModal";
 import MissionResultModal from "../_components/MissionResultModal";
 import fakeMission from "../fakeData.json";
+import { useParams } from "next/navigation";
 
 export const useMission = () => {
   const setModal = useSetAtom(modalAtom);
+  const roomCode = useParams().roomCode;
 
   const openModal = (mission: MissionResponseType) => {
     setModal({
@@ -25,7 +27,7 @@ export const useMission = () => {
     });
   };
 
-  console.log("GET /lobby/{lobby_id}/mission", fakeMission);
+  console.log(`GET /lobby/${roomCode}/mission`, fakeMission);
 
   return { fakeMission, openModal };
 };

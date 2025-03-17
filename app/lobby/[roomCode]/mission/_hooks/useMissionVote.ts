@@ -10,6 +10,7 @@ export const useMissionVote = (mission: MissionResponseType) => {
   const handleVote = (vote: "APPROVE" | "REJECT") => {
     console.log("POST /mission/{mission_id}/vote", "Payload:", {
       player_id: player.id,
+      mission_player: mission.mission_players.map((player) => player.id),
       vote,
     });
     setModal({ ...modal, open: false });
