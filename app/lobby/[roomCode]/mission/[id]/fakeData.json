@@ -1,0 +1,25 @@
+{
+  "code": 200,
+  "success": true,
+  "message": "OK",
+  "data": {
+    "id": 1,
+    "status": "IN_PLAY",
+    "name": "Mission 1",
+    "leader_id": 1,
+    "lobby_id": 1,
+    "result": null,
+    "mission_players": [
+      {
+        "id": 1,
+        "name": "Player 1",
+        "role": "SPY"
+      },
+      {
+        "id": 2,
+        "name": "Player 2",
+        "role": "SPY"
+      }
+    ]
+  }
+}
