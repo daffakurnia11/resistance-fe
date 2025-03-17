@@ -1,7 +1,11 @@
+import { missionApi } from "@/services/apis/mission-api";
 import { usePlayerRevealApi } from "@/services/swrs/use-player";
 import { LobbyResponseData } from "@/types/Lobby";
 import { PlayerResponseData } from "@/types/Player";
+import { notifContent } from "@/utils/atom";
 import { getCookie, setCookie } from "cookies-next";
+import { useSetAtom } from "jotai";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 export const useReveal = () => {
@@ -12,6 +16,9 @@ export const useReveal = () => {
     (getCookie("playerData") as string) || "{}"
   );
   const [countdown, setCountdown] = React.useState(4);
+  const setNotif = useSetAtom(notifContent);
+  const [isStarting, setIsStarting] = React.useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (!lobby || !player) {
@@ -37,5 +44,39 @@ export const useReveal = () => {
     }
   }, [!isLoading]);
 
-  return { data, isLoading, player, countdown };
+  const handleStart = async () => {
+    setIsStarting(true);
+    try {
+      await missionApi.start(lobby!.id).then((res) => {
+        if (res.success) {
+          setNotif({
+            title: "Mission started",
+            message: "The mission has started by host",
+          });
+          router.push(`/lobby/${lobby!.room_code}/mission`);
+        } else {
+          setNotif({
+            title: "Error",
+            message: res.message,
+          });
+        }
+      })
+    } catch (err: any) {
+      try {
+        setNotif({
+          title: "Error",
+          message: err.error.message[0],
+        });
+      } catch (error: any) {
+        setNotif({
+          title: "Error",
+          message: "Something went wrong",
+        });
+      }
+    } finally {
+      setIsStarting(false);
+    }
+  }
+
+  return { data, isLoading, player, countdown, handleStart, isStarting };
 };

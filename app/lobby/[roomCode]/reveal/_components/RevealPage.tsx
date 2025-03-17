@@ -7,13 +7,11 @@ import { PlayerResponseData } from "@/types/Player";
 import React from "react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useReveal } from "../_hooks/useReveal";
 
 export default function RevealPage() {
-  const { data, isLoading, player, countdown } = useReveal();
-  const roomCode = useParams().roomCode;
+  const { data, isLoading, player, countdown, handleStart, isStarting } =
+    useReveal();
 
   const FrontCard = (
     <Typography.Paragraph className="text-center text-green-primary">
@@ -76,11 +74,13 @@ export default function RevealPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Link href={`/lobby/${roomCode}/mission`}>
-              <Button.Primary className="w-full mt-6">
-                Start the missions!
-              </Button.Primary>
-            </Link>
+            <Button.Primary
+              className="w-full mt-6"
+              onClick={handleStart}
+              disabled={isStarting || isLoading}
+            >
+              Start the missions!
+            </Button.Primary>
           </motion.div>
         ) : (
           <div className="content-none h-10 w-full mt-6"></div>
