@@ -1,5 +1,5 @@
 import React from "react";
-import Reveal from "./Reveal";
+import RevealPage from "./_components/RevealPage";
 
 export async function generateMetadata({
   params,
@@ -11,6 +11,6 @@ export async function generateMetadata({
   };
 }
 
-export default function RevealPage() {
-  return <Reveal />;
+export default function Reveal() {
+  return <RevealPage />;
 }

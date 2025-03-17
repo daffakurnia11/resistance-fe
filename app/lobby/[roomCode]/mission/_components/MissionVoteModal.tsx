@@ -3,26 +3,15 @@ import Card from "@/components/card";
 import Typography from "@/components/typography";
 import { MissionResponseType } from "@/types/Mission";
 import { PlayerResponseData } from "@/types/Player";
-import { modalAtom } from "@/utils/jotai/atom";
-import { getCookie } from "cookies-next";
-import { useAtom } from "jotai";
 import React from "react";
+import { useMissionVote } from "../_hooks/useMissionVote";
 
 export default function MissionVoteModal({
   mission,
 }: {
   mission: MissionResponseType;
 }) {
-  const player = JSON.parse((getCookie("playerData") as string) || "{}");
-  const [modal, setModal] = useAtom(modalAtom);
-
-  const handleVote = (vote: "APPROVE" | "REJECT") => {
-    console.log("POST /mission/{mission_id}/vote", "Payload:", {
-      player_id: player.id,
-      vote,
-    });
-    setModal({ ...modal, open: false });
-  };
+  const { handleVote } = useMissionVote(mission);
 
   return (
     <div className="flex flex-col gap-2">

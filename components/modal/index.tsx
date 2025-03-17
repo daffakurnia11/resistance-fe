@@ -5,7 +5,7 @@ import Card from "../card";
 import Typography from "../typography";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useAtom } from "jotai";
-import { modalAtom } from "@/utils/jotai/atom";
+import { modalAtom } from "@/utils/atom";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Modal() {

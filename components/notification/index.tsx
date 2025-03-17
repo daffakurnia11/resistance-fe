@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAtom } from "jotai";
 import toast, { Toaster } from "react-hot-toast";
 import Typography from "../typography";
-import { notifContent } from "@/utils/jotai/atom";
+import { notifContent } from "@/utils/atom";
 
 export function CustomNotification({
   title,

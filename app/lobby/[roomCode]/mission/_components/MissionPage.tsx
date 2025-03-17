@@ -4,35 +4,13 @@ import Card from "@/components/card";
 import Typography from "@/components/typography";
 import clsx from "clsx";
 import React from "react";
-import fakeMission from "./fakeData.json";
 import { motion } from "framer-motion";
-import { useSetAtom } from "jotai";
-import { modalAtom } from "@/utils/jotai/atom";
 import { MissionResponseType } from "@/types/Mission";
-import MissionResultModal from "./_components/MissionResultModal";
-import MissionAssignModal from "./_components/MissionAssignModal";
-import MissionVoteModal from "./_components/MissionVoteModal";
+import { useMission } from "../_hooks/useMission";
 
-export default function Mission() {
-  const setModal = useSetAtom(modalAtom);
+export default function MissionPage() {
+  const { fakeMission, openModal } = useMission();
 
-  const openModal = (mission: MissionResponseType) => {
-    setModal({
-      open: true,
-      header: mission.name,
-      content:
-        mission.status === "ASSIGNING" ? (
-          <MissionAssignModal mission={mission} />
-        ) : mission.status === "VOTING" ? (
-          <MissionVoteModal mission={mission} />
-        ) : (
-          <MissionResultModal mission={mission} />
-        ),
-      footer: null,
-    });
-  };
-
-  console.log("GET /lobby/{lobby_id}/mission", fakeMission);
   return (
     <>
       <Typography.Heading

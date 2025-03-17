@@ -1,9 +1,9 @@
 import { lobbyApi } from "@/services/apis/lobby-api";
-import cookieStorage from "@/utils/cookies-storage";
-import { loadingAtom, notifContent } from "@/utils/jotai/atom";
+import { loadingAtom, notifContent } from "@/utils/atom";
 import { useAtom, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { setCookie } from "cookies-next";
 
 export const useHostRoom = () => {
   const [isLoading, setIsLoading] = useAtom(loadingAtom);
@@ -21,8 +21,8 @@ export const useHostRoom = () => {
           title: "Room created",
           message: "You have successfully created a room",
         });
-        cookieStorage.save("lobbyData", res.data.lobby);
-        cookieStorage.save("playerData", res.data.player);
+        setCookie("lobbyData", res.data.lobby);
+        setCookie("playerData", res.data.player);
         router.push(`/lobby?roomCode=${res.data.lobby.room_code}`);
       });
     } catch (err: any) {

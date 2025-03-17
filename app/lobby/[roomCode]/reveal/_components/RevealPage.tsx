@@ -5,13 +5,13 @@ import Card from "@/components/card";
 import Typography from "@/components/typography";
 import { PlayerResponseData } from "@/types/Player";
 import React from "react";
-import { useReveal } from "./_components/Reveal.hook";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useReveal } from "../_hooks/useReveal";
 
-export default function Reveal() {
+export default function RevealPage() {
   const { data, isLoading, player, countdown } = useReveal();
   const roomCode = useParams().roomCode;
 

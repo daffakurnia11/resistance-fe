@@ -1,5 +1,5 @@
 import React from "react";
-import Mission from "./Mission";
+import MissionPage from "./_components/MissionPage";
 
 export async function generateMetadata({
   params,
@@ -11,6 +11,6 @@ export async function generateMetadata({
   };
 }
 
-export default function MissionPage() {
-  return <Mission />;
+export default function Mission() {
+  return <MissionPage />;
 }

@@ -1,9 +1,9 @@
 import { playerApi } from "@/services/apis/player-api";
-import cookieStorage from "@/utils/cookies-storage";
-import { loadingAtom, notifContent } from "@/utils/jotai/atom";
+import { loadingAtom, notifContent } from "@/utils/atom";
 import { useAtom, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { setCookie } from "cookies-next";
 
 export const useJoinRoom = () => {
   const [isLoading, setIsLoading] = useAtom(loadingAtom);
@@ -23,8 +23,8 @@ export const useJoinRoom = () => {
             title: "Room joined",
             message: "You have successfully joined a room",
           });
-          cookieStorage.save("lobbyData", res.data.lobby);
-          cookieStorage.save("playerData", res.data.player);
+          setCookie("lobbyData", res.data.lobby);
+          setCookie("playerData", res.data.player);
           router.push(`/lobby?roomCode=${res.data.lobby.room_code}`);
         } else {
           setNotif({

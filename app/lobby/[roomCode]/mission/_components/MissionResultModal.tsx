@@ -4,14 +4,14 @@ import { MissionResponseType } from "@/types/Mission";
 import { PlayerResponseData } from "@/types/Player";
 import clsx from "clsx";
 import React from "react";
+import { useMissionResult } from "../_hooks/useMissionResult";
 
 export default function MissionResultModal({
   mission,
 }: {
   mission: MissionResponseType;
 }) {
-  const getVoters = (vote: "APPROVE" | "REJECT") =>
-    mission.mission_votes.filter((v) => v.vote === vote).map((v) => v.name);
+  const { getVoters } = useMissionResult(mission);
 
   return (
     <div className="flex flex-col gap-2">

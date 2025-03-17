@@ -1,8 +1,8 @@
 import * as React from "react";
-import HostRoomCard from "./_components/HostRoomCard";
-import JoinRoomCard from "./_components/JoinRoomCard";
+import HostRoomCard from "./HostRoomCard";
+import JoinRoomCard from "./JoinRoomCard";
 
-export default function Home() {
+export default function Homepage() {
   return (
     <div className="flex flex-col gap-4">
       <HostRoomCard />

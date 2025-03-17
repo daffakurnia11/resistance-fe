@@ -7,7 +7,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/16/solid";
 import React from "react";
-import { useLobbyAction } from "./Lobby.hook";
+import { useLobbyAction } from "../_hooks/useLobbyAction";
 import { PlayerResponseData } from "@/types/Player";
 import Loading from "@/components/loading";
 
