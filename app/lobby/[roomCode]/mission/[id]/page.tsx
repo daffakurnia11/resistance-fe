@@ -4,10 +4,11 @@ import MissionRoomPage from "./_components/MissionRoomPage";
 export async function generateMetadata({
   params,
 }: {
-  params: { roomCode: string };
+  params: Promise<{ roomCode: string }>;
 }) {
+  const resolvedParams = await params;
   return {
-    title: `Mission Room | Lobby ${params.roomCode} - The Resistance`,
+    title: `Mission Room | Lobby ${resolvedParams.roomCode} - The Resistance`,
   };
 }
 

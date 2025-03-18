@@ -4,10 +4,11 @@ import RevealPage from "./_components/RevealPage";
 export async function generateMetadata({
   params,
 }: {
-  params: { roomCode: string };
+  params: Promise<{ roomCode: string }>;
 }) {
+  const resolvedParams = await params;
   return {
-    title: `Reveal | Lobby ${params.roomCode} - The Resistance`,
+    title: `Reveal | Lobby ${resolvedParams.roomCode} - The Resistance`,
   };
 }
 
