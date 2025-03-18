@@ -59,7 +59,7 @@ export default function ResultRoom() {
           >
             <Card.Base
               className="w-full h-[150px]"
-              innerClassName="bg-action-green"
+              innerClassName="!bg-action-green"
             >
               <div className="flex items-center justify-center h-full">
                 <Typography.Heading
