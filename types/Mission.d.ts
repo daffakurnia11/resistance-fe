@@ -5,8 +5,13 @@ export interface MissionStartPayload {
   player_id: string;
 }
 
+export interface MissionAssignPayload {
+  leader_id: string;
+  player_ids: string[];
+}
+
 export interface MissionResponseType {
-  id: number;
+  id: string;
   name: string;
   result: "SUCCESS" | "FAIL";
   status: "OPEN" | "ASSIGNING" | "VOTING" | "IN_PLAY" | "CLOSED";

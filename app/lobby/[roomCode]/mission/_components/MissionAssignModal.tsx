@@ -22,6 +22,7 @@ export default function MissionAssignModal({
     handleAssign,
     selectedPlayers,
     getRule,
+    isSubmitting,
   } = useMissionAssign(mission);
 
   return (
@@ -56,7 +57,9 @@ export default function MissionAssignModal({
       <Button.Primary
         className="mt-6"
         onClick={handleAssign}
-        disabled={selectedPlayers.length !== getRule()?.maxPlayer}
+        disabled={
+          selectedPlayers.length !== getRule()?.maxPlayer || isSubmitting
+        }
       >
         Assign
       </Button.Primary>
