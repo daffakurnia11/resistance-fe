@@ -10,18 +10,34 @@ export interface MissionAssignPayload {
   player_ids: string[];
 }
 
+export interface MissionVotePayload {
+  player_id: string;
+  mission_players: string[];
+  vote: "APPROVE" | "REJECT";
+}
+
+export interface MissionPlayerResponseType {
+  id: string;
+  mission_id: string;
+  player_id: string;
+  player: PlayerResponseData;
+}
+
+export interface MissionVoteResponseType {
+  id: string;
+  mission_id: string;
+  player_id: string;
+  player: PlayerResponseData;
+  vote: "APPROVE" | "REJECT";
+}
+
 export interface MissionResponseType {
   id: string;
   name: string;
   result: "SUCCESS" | "FAIL";
   status: "OPEN" | "ASSIGNING" | "VOTING" | "IN_PLAY" | "CLOSED";
   leader: PlayerResponseData;
-  mission_players: PlayerResponseData[];
-  mission_votes: MissionVote[];
+  mission_players: MissionPlayerResponseType[];
+  mission_votes: MissionVoteResponseType[];
 }
 
-export interface MissionVote extends PlayerResponseData {
-  player_id: number;
-  name: string;
-  vote: "APPROVE" | "REJECT";
-}

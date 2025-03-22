@@ -11,7 +11,7 @@ export const useSocket = (socketKey: string) => {
     };
 
     socket.on("connect", () => {
-      console.log("Connected to websocket")
+      console.log("Connected to websocket " + socketKey)
     })
     socket.on(socketKey, handleData);
     socket.on("disconnect", () => {

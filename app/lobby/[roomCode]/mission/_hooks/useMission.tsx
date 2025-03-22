@@ -7,7 +7,7 @@ import MissionResultModal from "../_components/MissionResultModal";
 import { useParams } from "next/navigation";
 import { useLobbyMissionApi } from "@/services/swrs/use-lobby";
 import { useSocket } from "@/hooks/use-socket";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { getCookie } from "cookies-next";
 
 export const useMission = () => {
@@ -15,12 +15,13 @@ export const useMission = () => {
   const setNotif = useSetAtom(notifContent);
   const roomCode = useParams().roomCode;
   const player = JSON.parse((getCookie("playerData") as string) || "{}");
-  const { data, isLoading } = useLobbyMissionApi(roomCode as string);
+  const { data, isLoading, mutate } = useLobbyMissionApi(roomCode as string);
   const { socketData: missionLog } = useSocket("mission_log");
 
   useEffect(() => {
     if (!missionLog) return;
     console.log(missionLog);
+    mutate();
     if (missionLog && missionLog.status === "ASSIGNED") {
       setNotif({
         title: "Mission has been assigned!",
@@ -28,11 +29,34 @@ export const useMission = () => {
     }
   }, [missionLog]);
 
+  const getStatus = React.useCallback(
+    (mission: MissionResponseType) => {
+      if (
+        mission.status === "VOTING" &&
+        mission.mission_votes.some((vote) => vote.player_id === player.id)
+      ) {
+        return "VOTED";
+      } else {
+        return mission.status;
+      }
+    },
+    [player.id]
+  );
+
   const openModal = (mission: MissionResponseType) => {
     if (mission.status === "ASSIGNING" && mission.leader.id !== player.id) {
       setNotif({
         title: "You are not the leader!",
         message: "Only the leader can assign players",
+      });
+      return;
+    } else if (
+      mission.status === "VOTING" &&
+      mission.mission_votes.some((vote) => vote.player_id === player.id)
+    ) {
+      setNotif({
+        title: "You have already voted!",
+        message: "You cannot vote more than once",
       });
       return;
     }
@@ -51,5 +75,5 @@ export const useMission = () => {
     });
   };
 
-  return { data, isLoading, openModal };
+  return { data, isLoading, openModal, getStatus };
 };

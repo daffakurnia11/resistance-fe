@@ -9,7 +9,7 @@ import { MissionResponseType } from "@/types/Mission";
 import { useMission } from "../_hooks/useMission";
 
 export default function MissionPage() {
-  const { data, isLoading, openModal } = useMission();
+  const { data, isLoading, openModal, getStatus } = useMission();
 
   return (
     <>
@@ -87,7 +87,7 @@ export default function MissionPage() {
                             : "text-green-secondary"
                         )}
                       >
-                        {mission.status}
+                        {getStatus(mission)}
                       </Typography.Heading>
                     )}
                   </div>

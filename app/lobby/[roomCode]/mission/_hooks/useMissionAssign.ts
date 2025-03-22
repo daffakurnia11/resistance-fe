@@ -1,4 +1,4 @@
-import { useLobbyMissionApi, useLobbyPlayerApi } from "@/services/swrs/use-lobby";
+import { useLobbyPlayerApi } from "@/services/swrs/use-lobby";
 import { MissionAssignPayload, MissionResponseType } from "@/types/Mission";
 import { modalAtom, notifContent } from "@/utils/atom";
 import { useAtom, useSetAtom } from "jotai";
@@ -14,7 +14,6 @@ export const useMissionAssign = (mission: MissionResponseType) => {
   const [modal, setModal] = useAtom(modalAtom);
   const setNotif = useSetAtom(notifContent);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const { mutate } = useLobbyMissionApi(roomCode);
 
   const getRule = () => {
     return missionRule.find((rule) => rule.name === mission.name);
@@ -45,7 +44,6 @@ export const useMissionAssign = (mission: MissionResponseType) => {
     };
     try {
       await missionApi.assign(mission.id, payload).then(() => {
-        mutate();
         setModal({ ...modal, open: false });
       })
     } catch (err: any) {
