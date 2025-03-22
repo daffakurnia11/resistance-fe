@@ -1,6 +1,8 @@
+import { useSocket } from "@/hooks/use-socket";
 import { missionApi } from "@/services/apis/mission-api";
 import { usePlayerRevealApi } from "@/services/swrs/use-player";
 import { LobbyResponseData } from "@/types/Lobby";
+import { MissionStartPayload } from "@/types/Mission";
 import { PlayerResponseData } from "@/types/Player";
 import { notifContent } from "@/utils/atom";
 import { getCookie, setCookie } from "cookies-next";
@@ -15,6 +17,7 @@ export const useReveal = () => {
   const player: PlayerResponseData = JSON.parse(
     (getCookie("playerData") as string) || "{}"
   );
+  const { socketData: lobbySocket } = useSocket("lobby_log");
   const [countdown, setCountdown] = React.useState(4);
   const setNotif = useSetAtom(notifContent);
   const [isStarting, setIsStarting] = React.useState(false);
@@ -44,10 +47,22 @@ export const useReveal = () => {
     }
   }, [!isLoading]);
 
+  useEffect(() => {
+    if (!lobbySocket) return;
+
+    if (lobbySocket.action === "START") {
+      router.push(`/lobby/${lobby!.room_code}/mission`);
+    }
+  }, [lobbySocket]);
+
   const handleStart = async () => {
     setIsStarting(true);
+    const payload: MissionStartPayload = {
+      lobby_id: lobby!.id,
+      player_id: player!.id,
+    };
     try {
-      await missionApi.start(lobby!.id).then((res) => {
+      await missionApi.start(payload).then((res) => {
         if (res.success) {
           setNotif({
             title: "Mission started",
@@ -60,7 +75,7 @@ export const useReveal = () => {
             message: res.message,
           });
         }
-      })
+      });
     } catch (err: any) {
       try {
         setNotif({
@@ -76,7 +91,7 @@ export const useReveal = () => {
     } finally {
       setIsStarting(false);
     }
-  }
+  };
 
   return { data, isLoading, player, countdown, handleStart, isStarting };
 };

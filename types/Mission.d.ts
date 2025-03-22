@@ -1,5 +1,10 @@
 import { PlayerResponseData } from "./Player";
 
+export interface MissionStartPayload {
+  lobby_id: string;
+  player_id: string;
+}
+
 export interface MissionResponseType {
   id: number;
   name: string;
