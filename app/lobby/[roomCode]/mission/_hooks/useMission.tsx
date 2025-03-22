@@ -26,6 +26,11 @@ export const useMission = () => {
       setNotif({
         title: "Mission has been assigned!",
       });
+    } else if (missionLog && missionLog.status === "REASSIGNING") {
+      setNotif({
+        title: "Players Rejected!",
+        message: "Leader needs to reassign players",
+      });
     }
   }, [missionLog]);
 
