@@ -32,7 +32,7 @@ export default function MissionPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: !isLoading && data ? 1 : 0 }}
           transition={{ duration: 0.5 }}
-          className="flex justify-center flex-wrap mt-4 h-[447px]"
+          className="flex justify-center flex-wrap mt-4 max-w-[466px] mx-auto"
         >
           {(data?.data.missions as any)?.map(
             (mission: MissionResponseType, index: number) => (
@@ -40,12 +40,12 @@ export default function MissionPage() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="w-1/2 p-2"
+                className="w-1/2 max-w-[150px] max-h-[150px] aspect-square p-2"
                 key={index}
               >
                 <Card.Base
                   className={clsx(
-                    "h-full aspect-square relative",
+                    "h-full w-full relative",
                     mission.status === "OPEN"
                       ? "cursor-not-allowed opacity-50"
                       : "cursor-pointer"

@@ -61,7 +61,6 @@ export const useLobbyData = () => {
 
   useEffect(() => {
     if (!lobbySocket) return;
-    console.log(lobbySocket.action);
 
     const player: PlayerResponseData = JSON.parse(
       (getCookie("playerData") as string) || "{}"

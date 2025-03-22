@@ -24,7 +24,7 @@ interface DefaultProps extends PlayerCardProps {
 
 const NoPlayerCard = () => {
   return (
-    <Card.Base className="h-20">
+    <Card.Base className="h-20 w-full max-w-[325px]">
       <div className="px-5 flex justify-center items-center h-full">
         <Typography.Small className="text-green-primary">
           Waiting for other player..
@@ -36,7 +36,7 @@ const NoPlayerCard = () => {
 
 const HostPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
   return (
-    <Card.Base className="h-20">
+    <Card.Base className="h-20 w-full max-w-[325px]">
       <div className="px-5">
         <Typography.Paragraph>
           Player {playerNumber} (Host)
@@ -62,7 +62,7 @@ const SelfPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
   );
 
   return (
-    <Card.Base className="h-20" action={LeaveComponent}>
+    <Card.Base className="h-20 w-full max-w-[325px]" action={LeaveComponent}>
       <div className="px-5">
         <Typography.Paragraph>Player {playerNumber} (You)</Typography.Paragraph>
         <Typography.Small className="text-green-secondary">
@@ -75,7 +75,7 @@ const SelfPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
 
 const MasterPlayerCard = ({ playerData, playerNumber }: PlayerCardProps) => {
   return (
-    <Card.Base className="h-20">
+    <Card.Base className="h-20 w-full max-w-[325px]">
       <div className="px-5">
         <Typography.Paragraph>
           Player {playerNumber} (Host) (You)
@@ -105,7 +105,10 @@ const DefaultPlayerCard = ({
   );
 
   return (
-    <Card.Base className="h-20" action={role === "MASTER" ? KickComponent : ""}>
+    <Card.Base
+      className="h-20 w-full max-w-[325px]"
+      action={role === "MASTER" ? KickComponent : ""}
+    >
       <div className="px-5">
         <Typography.Paragraph>Player {playerNumber}</Typography.Paragraph>
         <Typography.Small className="text-green-secondary">
@@ -118,7 +121,7 @@ const DefaultPlayerCard = ({
 
 const LoadingPlayerCard = ({ isLoading }: { isLoading: boolean }) => {
   return (
-    <Card.Base className="h-20">
+    <Card.Base className="h-20 w-full max-w-[325px]">
       <div className="px-5">
         <Loading
           className="w-3/4 h-[16px] mb-1.5 !ms-0 !me-auto"

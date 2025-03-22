@@ -32,14 +32,14 @@ export default function LobbyPage() {
   const masterAction = (
     <>
       <Button.Primary
-        className="w-full mt-4"
+        className="w-full mt-4 max-w-[325px] mx-auto"
         disabled={playerList?.length !== 5 || isLoading}
         onClick={onStart}
       >
         Start Game
       </Button.Primary>
       <Button.Secondary
-        className="w-full mt-4"
+        className="w-full mt-4 max-w-[325px] mx-auto"
         onClick={onDelete}
         disabled={isLoading}
       >
@@ -50,7 +50,7 @@ export default function LobbyPage() {
 
   const memberAction = (
     <Button.Secondary
-      className="w-full mt-4"
+      className="w-full mt-4 max-w-[325px] mx-auto"
       onClick={onLeave}
       disabled={isLoading}
     >
@@ -66,7 +66,7 @@ export default function LobbyPage() {
           level={3}
           className="text-center mb-2"
           isLoading={isLoading || !Boolean(lobbyRoom)}
-          loadingClassName="!w-1/2 mb-2"
+          loadingClassName="w-full max-w-[150px] mx-auto mb-2"
         >
           Room {lobbyRoom}
         </Typography.Heading>
@@ -74,6 +74,7 @@ export default function LobbyPage() {
           <Typography.Paragraph
             className="text-center text-green-primary"
             isLoading={isLoading}
+            loadingClassName="max-w-[325px] mx-auto"
           >
             Waiting for players to join...
           </Typography.Paragraph>
@@ -81,13 +82,14 @@ export default function LobbyPage() {
           <Typography.Paragraph
             className="text-center text-green-primary"
             isLoading={isLoading}
+            loadingClassName="max-w-[325px] mx-auto"
           >
             {currentPlayer?.room_role !== "MASTER"
               ? "Waiting for host to start game..."
               : "Start the game when you're ready!"}
           </Typography.Paragraph>
         )}
-        <div className="flex flex-col gap-2 mt-5 mb-10">
+        <div className="flex flex-wrap justify-center gap-2 mt-5 mb-10 w-full max-w-[700px] mx-auto">
           {[...Array(5)].map((_, i) =>
             !isLoading && playerList && playerList[i] ? (
               <PlayerCard
