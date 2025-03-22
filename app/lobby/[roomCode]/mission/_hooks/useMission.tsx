@@ -4,13 +4,14 @@ import { useSetAtom } from "jotai";
 import MissionAssignModal from "../_components/MissionAssignModal";
 import MissionVoteModal from "../_components/MissionVoteModal";
 import MissionResultModal from "../_components/MissionResultModal";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useLobbyMissionApi } from "@/services/swrs/use-lobby";
 import { useSocket } from "@/hooks/use-socket";
 import React, { useEffect } from "react";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 export const useMission = () => {
+  const router = useRouter();
   const setModal = useSetAtom(modalAtom);
   const setNotif = useSetAtom(notifContent);
   const roomCode = useParams().roomCode;
@@ -31,6 +32,18 @@ export const useMission = () => {
         title: "Players Rejected!",
         message: "Leader needs to reassign players",
       });
+    } else if (missionLog && missionLog.status === "START") {
+      setNotif({
+        title: "Mission has started!",
+        message: "Let's play for the mission",
+      });
+      setCookie(
+        "missionData",
+        data.data.missions.find(
+          (mission: MissionResponseType) => mission.id === missionLog.mission_id
+        )
+      );
+      router.push(`/lobby/${roomCode}/mission/${missionLog.mission_id}`);
     }
   }, [missionLog]);
 

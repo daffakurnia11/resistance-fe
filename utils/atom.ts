@@ -12,3 +12,4 @@ export const modalAtom = atom<ModalType>({
   content: null,
   footer: null,
 });
+export const playAtom = atom<"playing" | "waiting" | "result">("waiting");

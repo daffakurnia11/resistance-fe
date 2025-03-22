@@ -1,8 +1,10 @@
 import Typography from "@/components/typography";
-import fakeData from "../fakeData.json";
 import React from "react";
+import { getCookie } from "cookies-next";
 
 export default function WaitingRoom() {
+  const player = JSON.parse((getCookie("playerData") as string) || "{}");
+
   return (
     <>
       <Typography.Heading
@@ -10,7 +12,7 @@ export default function WaitingRoom() {
         level={3}
         className="text-center text-green-secondary"
       >
-        {fakeData.data.name}
+        {player.name}
       </Typography.Heading>
       <Typography.Heading
         as={"h2"}

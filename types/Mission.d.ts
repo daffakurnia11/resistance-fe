@@ -16,11 +16,17 @@ export interface MissionVotePayload {
   vote: "APPROVE" | "REJECT";
 }
 
+export interface MissionPlayPayload {
+  player_id: string;
+  state: "SUCCESS" | "FAIL";
+}
+
 export interface MissionPlayerResponseType {
   id: string;
   mission_id: string;
   player_id: string;
   player: PlayerResponseData;
+  state: "SUCCESS" | "FAIL" | null;
 }
 
 export interface MissionVoteResponseType {

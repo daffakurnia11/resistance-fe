@@ -1,4 +1,4 @@
-import { MissionAssignPayload, MissionStartPayload, MissionVotePayload } from "@/types/Mission";
+import { MissionAssignPayload, MissionPlayPayload, MissionStartPayload, MissionVotePayload } from "@/types/Mission";
 import axios from "axios";
 
 class MissionApi {
@@ -28,6 +28,24 @@ class MissionApi {
   async vote(missionId: string, payload: MissionVotePayload) {
     return axios
       .post(`${this.apiUrl}/${missionId}/vote`, payload)
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
+
+  async get(missionId: string) {
+    return axios
+      .get(`${this.apiUrl}/${missionId}`)
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
+
+  async play(missionId: string, payload: MissionPlayPayload) {
+    return axios
+      .post(`${this.apiUrl}/${missionId}/play`, payload)
       .then((res) => res.data)
       .catch((err) => {
         throw err.response.data;
