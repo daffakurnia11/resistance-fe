@@ -66,8 +66,8 @@ export default function MissionPage() {
                     Mission {index + 1}
                   </Typography.Paragraph>
                   {mission.status !== "OPEN" && (
-                    <Typography.Small className="text-center text-green-primary absolute bottom-3 left-1/2 transform -translate-x-1/2 text-nowrap">
-                      Leader: {mission.leader.name}
+                    <Typography.Small className="text-center !text-xs text-green-primary absolute bottom-3 left-1/2 transform -translate-x-1/2 w-full max-w-[130px] text-wrap">
+                      {mission.leader.name} (L)
                     </Typography.Small>
                   )}
                   <div className="h-full flex justify-center items-center">
