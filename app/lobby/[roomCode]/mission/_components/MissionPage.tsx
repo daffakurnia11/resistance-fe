@@ -9,7 +9,8 @@ import { MissionResponseType } from "@/types/Mission";
 import { useMission } from "../_hooks/useMission";
 
 export default function MissionPage() {
-  const { data, isLoading, openModal, getStatus } = useMission();
+  const { data, isLoading, openModal, getStatus, handleOpenMission } =
+    useMission();
 
   return (
     <>
@@ -50,9 +51,7 @@ export default function MissionPage() {
                       ? "cursor-not-allowed opacity-50"
                       : "cursor-pointer"
                   )}
-                  onClick={() =>
-                    mission.status !== "OPEN" && openModal(mission)
-                  }
+                  onClick={() => handleOpenMission(mission)}
                 >
                   <Typography.Paragraph className="text-center text-green-primary absolute top-3 left-1/2 transform -translate-x-1/2 text-nowrap">
                     Mission {index + 1}

@@ -1,4 +1,7 @@
-import { MissionResponseType } from "@/types/Mission";
+import {
+  MissionPlayerResponseType,
+  MissionResponseType,
+} from "@/types/Mission";
 import { modalAtom, notifContent } from "@/utils/atom";
 import { useSetAtom } from "jotai";
 import MissionAssignModal from "../_components/MissionAssignModal";
@@ -33,17 +36,25 @@ export const useMission = () => {
         message: "Leader needs to reassign players",
       });
     } else if (missionLog && missionLog.status === "START") {
+      const missionData = data.data.missions.find(
+        (mission: MissionResponseType) => mission.id === missionLog.mission_id
+      );
+
       setNotif({
         title: "Mission has started!",
         message: "Let's play for the mission",
       });
-      setCookie(
-        "missionData",
-        data.data.missions.find(
-          (mission: MissionResponseType) => mission.id === missionLog.mission_id
+      setCookie("missionData", JSON.stringify(missionData));
+      if (
+        missionData.mission_players.some(
+          (missionPlayer: MissionPlayerResponseType) =>
+            missionPlayer.player_id === player.id
         )
-      );
-      router.push(`/lobby/${roomCode}/mission/${missionLog.mission_id}`);
+      ) {
+        router.push(`/lobby/${roomCode}/mission/${missionLog.mission_id}/play`);
+      } else {
+        router.push(`/lobby/${roomCode}/mission/${missionLog.mission_id}/wait`);
+      }
     }
   }, [missionLog]);
 
@@ -54,6 +65,8 @@ export const useMission = () => {
         mission.mission_votes.some((vote) => vote.player_id === player.id)
       ) {
         return "VOTED";
+      } else if (mission.status === "IN_PLAY") {
+        return "PLAYING";
       } else {
         return mission.status;
       }
@@ -93,5 +106,24 @@ export const useMission = () => {
     });
   };
 
-  return { data, isLoading, openModal, getStatus };
+  const handleOpenMission = (mission: MissionResponseType) => {
+    if (mission.status !== "OPEN") {
+      if (mission.status === "IN_PLAY") {
+        if (
+          mission.mission_players.some(
+            (missionPlayer: MissionPlayerResponseType) =>
+              missionPlayer.player_id === player.id
+          )
+        ) {
+          router.push(`/lobby/${roomCode}/mission/${mission.id}/play`);
+        } else {
+          router.push(`/lobby/${roomCode}/mission/${mission.id}/wait`);
+        }
+      } else {
+        openModal(mission);
+      }
+    }
+  };
+
+  return { data, isLoading, openModal, getStatus, handleOpenMission };
 };

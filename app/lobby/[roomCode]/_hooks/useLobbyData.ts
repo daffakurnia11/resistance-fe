@@ -98,9 +98,9 @@ export const useLobbyData = () => {
     }
   }, [lobbySocket, router, setNotif]);
 
-  if (currentPlayer?.role) {
-    router.push(`/lobby/${roomCode}/reveal`);
-  }
+  // if (currentPlayer?.role) {
+  //   router.push(`/lobby/${roomCode}/reveal`);
+  // }
 
   return { isClient, isLoading, lobbyRoom, playerList, currentPlayer };
 };

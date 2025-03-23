@@ -1,17 +1,18 @@
 import React from "react";
-import { getCookie, setCookie } from "cookies-next";
-import { MissionPlayerResponseType, MissionPlayPayload } from "@/types/Mission";
+import { getCookie } from "cookies-next";
+import { MissionPlayPayload } from "@/types/Mission";
 import { missionApi } from "@/services/apis/mission-api";
 import { useSetAtom } from "jotai";
-import { notifContent, playAtom } from "@/utils/atom";
+import { notifContent } from "@/utils/atom";
+import { useParams, useRouter } from "next/navigation";
 
 export const usePlayRoom = () => {
+  const { roomCode, id } = useParams();
+  const router = useRouter();
   const player = JSON.parse((getCookie("playerData") as string) || "{}");
-  const mission = JSON.parse((getCookie("missionData") as string) || "{}");
   const [result, setResult] = React.useState<"SUCCESS" | "FAIL" | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const setNotif = useSetAtom(notifContent);
-  const setPlay = useSetAtom(playAtom)
 
   const subtitle = () => {
     if (player.role === "SPY") {
@@ -44,12 +45,12 @@ export const usePlayRoom = () => {
       state: result!,
     };
     try {
-      await missionApi.play(mission.id, payload).then(() => {
+      await missionApi.play(id as string, payload).then(() => {
         setNotif({
           title: "Mission Done!",
           message: "Wait for other player to do their mission",
         });
-        setPlay('waiting')
+        router.push(`/lobby/${roomCode}/mission/${id}/wait`);
       });
     } catch (err: any) {
       try {
@@ -75,6 +76,6 @@ export const usePlayRoom = () => {
     result,
     onSubmit,
     player,
-    isSubmitting
+    isSubmitting,
   };
 };

@@ -1,7 +1,9 @@
 import Card from "@/components/card";
 import Typography from "@/components/typography";
-import { MissionResponseType } from "@/types/Mission";
-import { PlayerResponseData } from "@/types/Player";
+import {
+  MissionPlayerResponseType,
+  MissionResponseType,
+} from "@/types/Mission";
 import clsx from "clsx";
 import React from "react";
 import { useMissionResult } from "../_hooks/useMissionResult";
@@ -22,13 +24,17 @@ export default function MissionResultModal({
       <Typography.Paragraph className="text-green-primary">
         Assigned to
       </Typography.Paragraph>
-      {mission.mission_players.map((player: PlayerResponseData, index) => (
-        <Card.Base key={index}>
-          <Typography.Paragraph>
-            <span className="text-green-white">{player.name}</span>
-          </Typography.Paragraph>
-        </Card.Base>
-      ))}
+      {mission.mission_players.map(
+        (missionPlayer: MissionPlayerResponseType, index) => (
+          <Card.Base key={index}>
+            <Typography.Paragraph>
+              <span className="text-green-white">
+                {missionPlayer.player.name}
+              </span>
+            </Typography.Paragraph>
+          </Card.Base>
+        )
+      )}
       <div>
         <Typography.Paragraph className="text-green-primary">
           Approved by :

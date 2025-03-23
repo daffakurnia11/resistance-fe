@@ -1,5 +1,5 @@
 import React from "react";
-import MissionRoomPage from "./_components/MissionRoomPage";
+import PlayRoom from "./_components/PlayRoom";
 
 export async function generateMetadata({
   params,
@@ -13,5 +13,5 @@ export async function generateMetadata({
 }
 
 export default function MissinRoom() {
-  return <MissionRoomPage />;
+  return <PlayRoom />;
 }

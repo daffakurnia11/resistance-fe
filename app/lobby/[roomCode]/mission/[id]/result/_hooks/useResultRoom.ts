@@ -10,26 +10,28 @@ export const useResultRoom = () => {
   const { data, isLoading } = useMissionApi(id as string);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => (prev === 0 ? 0 : prev - 1));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+    if (!isLoading && data && data.data.result) {
+      const timer = setInterval(() => {
+        setCountdown((prev) => (prev === 0 ? 0 : prev - 1));
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [data, isLoading]);
 
   useEffect(() => {
-    if (countdown === 0) {
+    if (!isLoading && data && data.data.result && countdown === 0) {
       const timer = setInterval(() => {
         setAfterCountdown((prev) => (prev === 0 ? 0 : prev - 1));
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [countdown]);
+  }, [data, isLoading, countdown]);
 
   useEffect(() => {
-    if (afterCountdown === 0) {
+    if (!isLoading && data && data.data.result && afterCountdown === 0) {
       router.push(`/lobby/${roomCode}/mission`);
     }
-  }, [afterCountdown]);
+  }, [data, isLoading, afterCountdown]);
 
   return { countdown, afterCountdown, data, isLoading };
 };

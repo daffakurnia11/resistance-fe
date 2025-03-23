@@ -34,20 +34,37 @@ export default function ResultRoom() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <Card.Base
-                className="w-full h-[150px]"
-                innerClassName="!bg-action-green"
-              >
-                <div className="flex items-center justify-center h-full">
-                  <Typography.Heading
-                    as="h3"
-                    level={3}
-                    className="text-center text-white"
-                  >
-                    {data.data.result}
-                  </Typography.Heading>
-                </div>
-              </Card.Base>
+              {data.data.result === "SUCCESS" ? (
+                <Card.Base
+                  className="w-full h-[150px]"
+                  innerClassName="!bg-action-green"
+                >
+                  <div className="flex items-center justify-center h-full">
+                    <Typography.Heading
+                      as="h3"
+                      level={3}
+                      className="text-center !text-white"
+                    >
+                      {data.data.result}
+                    </Typography.Heading>
+                  </div>
+                </Card.Base>
+              ) : (
+                <Card.Base
+                  className="w-full h-[150px]"
+                  innerClassName="!bg-action-red"
+                >
+                  <div className="flex items-center justify-center h-full">
+                    <Typography.Heading
+                      as="h3"
+                      level={3}
+                      className="text-center !text-white"
+                    >
+                      {data.data.result}
+                    </Typography.Heading>
+                  </div>
+                </Card.Base>
+              )}
             </motion.div>
           )}
         </div>

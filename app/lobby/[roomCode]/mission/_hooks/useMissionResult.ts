@@ -1,8 +1,10 @@
-import { MissionResponseType } from "@/types/Mission";
+import { MissionResponseType, MissionVoteResponseType } from "@/types/Mission";
 
 export const useMissionResult = (mission: MissionResponseType) => {
   const getVoters = (vote: "APPROVE" | "REJECT") =>
-    mission.mission_votes.filter((v) => v.vote === vote).map((v) => v.name);
+    mission.mission_votes
+      .filter((v: MissionVoteResponseType) => v.vote === vote)
+      .map((v: MissionVoteResponseType) => v.player.name);
 
   return { getVoters };
 };
