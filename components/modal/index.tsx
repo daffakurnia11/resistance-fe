@@ -27,10 +27,10 @@ export default function Modal() {
           onClick={handleClose}
         >
           <div
-            className="w-full overflow-auto max-h-[100vh] p-8"
+            className="w-full overflow-auto max-h-[100vh] p-8 max-w-[400px] mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <Card.Base className="w-full max-w-[350px] mx-auto">
+            <Card.Base className="w-full">
               <div className="flex justify-between items-center">
                 <Typography.Heading
                   as={"h3"}

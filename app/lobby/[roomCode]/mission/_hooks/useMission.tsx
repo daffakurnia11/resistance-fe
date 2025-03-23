@@ -12,6 +12,9 @@ import { useLobbyMissionApi } from "@/services/swrs/use-lobby";
 import { useSocket } from "@/hooks/use-socket";
 import React, { useEffect } from "react";
 import { getCookie, setCookie } from "cookies-next";
+import WinnerModal from "../_components/WinnerModal";
+import { PlayerResponseData } from "@/types/Player";
+import { lobbyApi } from "@/services/apis/lobby-api";
 
 export const useMission = () => {
   const router = useRouter();
@@ -20,11 +23,51 @@ export const useMission = () => {
   const roomCode = useParams().roomCode;
   const player = JSON.parse((getCookie("playerData") as string) || "{}");
   const { data, isLoading, mutate } = useLobbyMissionApi(roomCode as string);
+  const { socketData: lobbyLog } = useSocket("lobby_log");
   const { socketData: missionLog } = useSocket("mission_log");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  const openResultModal = () => {
+    const resistanceList = data.data.players
+      .filter((player: PlayerResponseData) => player.role === "RESISTANCE")
+      .map((player: PlayerResponseData) => player.name);
+
+    const spyList = data.data.players
+      .filter((player: PlayerResponseData) => player.role === "SPY")
+      .map((player: PlayerResponseData) => player.name);
+
+    setModal({
+      open: true,
+      header: "Winner",
+      content: (
+        <WinnerModal
+          winner={data.data.winner}
+          resistanceList={resistanceList}
+          spyList={spyList}
+        />
+      ),
+      footer: null,
+    });
+  };
+
+  useEffect(() => {
+    if (!data) return;
+    if (data.data.winner) {
+      openResultModal();
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (lobbyLog && lobbyLog.action === "END") {
+      setNotif({
+        title: "Game Ended",
+      });
+      router.push(`/lobby/${roomCode}`);
+    }
+  }, [lobbyLog]);
 
   useEffect(() => {
     if (!missionLog) return;
-    console.log(missionLog);
     mutate();
     if (missionLog && missionLog.status === "ASSIGNED") {
       setNotif({
@@ -125,5 +168,39 @@ export const useMission = () => {
     }
   };
 
-  return { data, isLoading, openModal, getStatus, handleOpenMission };
+  const handleEndGame = async () => {
+    setIsSubmitting(true);
+    try {
+      await lobbyApi.endGame(data.data.id, player.id).then(() => {
+        setNotif({
+          title: "Game Ended",
+        });
+      });
+    } catch (err: any) {
+      try {
+        setNotif({
+          title: "Error",
+          message: err.error.message[0],
+        });
+      } catch (error: any) {
+        setNotif({
+          title: "Error",
+          message: "Something went wrong",
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return {
+    data,
+    isLoading,
+    getStatus,
+    handleOpenMission,
+    player,
+    openResultModal,
+    handleEndGame,
+    isSubmitting,
+  };
 };

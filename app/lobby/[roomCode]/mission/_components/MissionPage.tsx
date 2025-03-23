@@ -7,10 +7,19 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MissionResponseType } from "@/types/Mission";
 import { useMission } from "../_hooks/useMission";
+import Button from "@/components/button";
 
 export default function MissionPage() {
-  const { data, isLoading, openModal, getStatus, handleOpenMission } =
-    useMission();
+  const {
+    data,
+    isLoading,
+    getStatus,
+    handleOpenMission,
+    player,
+    openResultModal,
+    handleEndGame,
+    isSubmitting,
+  } = useMission();
 
   return (
     <>
@@ -93,6 +102,28 @@ export default function MissionPage() {
                 </Card.Base>
               </motion.div>
             )
+          )}
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center"
+        >
+          <Button.Secondary
+            className="w-full max-w-[300px] mx-auto mt-4 cursor-pointer"
+            onClick={openResultModal}
+          >
+            See Result
+          </Button.Secondary>
+          {player.room_role === "MASTER" && (
+            <Button.Primary
+              className="w-full max-w-[300px] mx-auto mt-4"
+              disabled={isSubmitting}
+              onClick={handleEndGame}
+            >
+              End Game
+            </Button.Primary>
           )}
         </motion.div>
       </AnimatePresence>

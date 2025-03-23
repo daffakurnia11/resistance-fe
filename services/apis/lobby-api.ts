@@ -48,6 +48,15 @@ class LobbyApi {
         throw err.response.data;
       });
   }
+
+  async endGame(lobbyId: string, playerId: string) {
+    return axios
+      .post(`${this.apiUrl}/${lobbyId}/end`, { player_id: playerId })
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response.data;
+      });
+  }
 }
 
 export const lobbyApi = new LobbyApi();
