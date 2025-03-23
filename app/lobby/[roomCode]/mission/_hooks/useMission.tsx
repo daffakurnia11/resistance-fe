@@ -54,6 +54,12 @@ export const useMission = () => {
     if (!data) return;
     if (data.data.winner) {
       openResultModal();
+      if (data.data.missions.length === 0) {
+        setNotif({
+          title: "Game Ended",
+        });
+        router.push(`/lobby/${roomCode}`);
+      }
     }
   }, [data]);
 
