@@ -22,7 +22,7 @@ export default function Small({
   ) : (
     <Component
       {...props}
-      className={clsx("font-roboto text-sm sm:text-base", props.className)}
+      className={clsx("font-roboto text-sm", props.className)}
     >
       {children}
     </Component>

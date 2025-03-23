@@ -12,11 +12,11 @@ export default function Heading({
   ...props
 }: HeadingProps) {
   const sizeLevel = {
-    1: "text-3xl sm:text-4xl",
-    2: "text-2xl sm:text-3xl",
-    3: "text-xl sm:text-2xl",
-    4: "text-lg sm:text-xl",
-    5: "text-base sm:text-lg",
+    1: "text-3xl",
+    2: "text-2xl",
+    3: "text-xl",
+    4: "text-lg",
+    5: "text-base",
   };
 
   const loadingSize = {

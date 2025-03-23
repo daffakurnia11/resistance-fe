@@ -22,7 +22,7 @@ export default function Paragraph({
   ) : (
     <Component
       {...props}
-      className={clsx("font-roboto text-base sm:text-lg", props.className)}
+      className={clsx("font-roboto text-base", props.className)}
     >
       {children}
     </Component>
