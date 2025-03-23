@@ -6,9 +6,10 @@ type PageProps<T = object> = {
 
 export async function generateMetadata({
   params,
-}: PageProps<{ roomCode: string }>) {
+}: PageProps<Promise<{ roomCode: string }>>) {
+  const resolvedParams = await params;
   return {
-    title: `Lobby ${params.roomCode} - The Resistance`,
+    title: `Lobby ${resolvedParams.roomCode} - The Resistance`,
   };
 }
 
