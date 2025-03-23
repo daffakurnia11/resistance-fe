@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import { useJoinRoom } from "./JoinRoom.hook";
 
-export default function JoinRoomCard() {
+function JoinRoomCardContent() {
   const searchParams = useSearchParams();
   const room = searchParams.get("room");
   const { isLoading, payload, setPayload, handleSubmit } = useJoinRoom();
@@ -43,5 +43,13 @@ export default function JoinRoomCard() {
         </Button.Primary>
       </div>
     </Card.Base>
+  );
+}
+
+export default function JoinRoomCard() {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <JoinRoomCardContent />
+    </React.Suspense>
   );
 }
