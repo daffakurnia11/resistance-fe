@@ -30,7 +30,7 @@ export default function Modal() {
             className="w-full overflow-auto max-h-[100vh] p-8"
             onClick={(e) => e.stopPropagation()}
           >
-            <Card.Base className="w-full">
+            <Card.Base className="w-full max-w-[350px] mx-auto">
               <div className="flex justify-between items-center">
                 <Typography.Heading
                   as={"h3"}
