@@ -5,9 +5,12 @@ import Typography from "@/components/typography";
 import React from "react";
 import { motion } from "framer-motion";
 import { useResultRoom } from "../_hooks/useResultRoom";
+import Button from "@/components/button";
+import Link from "next/link";
 
 export default function ResultRoom() {
-  const { countdown, afterCountdown, data, isLoading } = useResultRoom();
+  const { countdown, afterCountdown, data, isLoading, roomCode } =
+    useResultRoom();
 
   return (
     data &&
@@ -69,9 +72,16 @@ export default function ResultRoom() {
           )}
         </div>
         {countdown === 0 && (
-          <Typography.Paragraph className="text-green-primary text-center mt-6">
-            Redirecting to mission room in {afterCountdown}
-          </Typography.Paragraph>
+          <>
+            <Typography.Paragraph className="text-green-primary text-center mt-6">
+              Redirecting to mission room in {afterCountdown}
+            </Typography.Paragraph>
+            <Link href={`/lobby/${roomCode}/mission`}>
+              <Button.Primary className="w-full max-w-[300px] mx-auto mt-5">
+                Directly back to mission
+              </Button.Primary>
+            </Link>
+          </>
         )}
       </>
     )

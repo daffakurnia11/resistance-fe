@@ -33,5 +33,5 @@ export const useResultRoom = () => {
     }
   }, [data, isLoading, afterCountdown]);
 
-  return { countdown, afterCountdown, data, isLoading };
+  return { countdown, afterCountdown, data, isLoading, roomCode };
 };
